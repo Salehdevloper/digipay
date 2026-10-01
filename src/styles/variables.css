@@ -1,0 +1,102 @@
+/* =========================================================
+   variables.css
+   تنها جایی که فونت‌ها و متغیرهای پروژه تعریف می‌شن.
+   1. Fonts
+   2. Design tokens (رنگ، فونت، لایه‌ها، عرض‌ها)
+   3. Responsive tokens (مقادیری که با اندازه‌ی صفحه عوض می‌شن)
+========================================================= */
+
+/* =========================
+   1. Fonts
+   - font-display: swap  => متن تا لود فونت نامرئی نمی‌مونه
+   - فقط فونتی که واقعاً استفاده می‌شه دانلود می‌شه؛
+     اگه IRANSans و Yekan رو استفاده نمی‌کنی، می‌تونی پاکشون کنی.
+   - برای سرعت بیشتر، نسخه‌ی woff2 فونت‌ها رو جایگزین ttf کن.
+========================== */
+
+@font-face {
+  font-family: "IRANSans";
+  src: url("../assets/fonts/IRANSans/IranianSans.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Yekan";
+  src: url("../assets/fonts/Yakan/BYekan.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Vazir";
+  src: url("../assets/fonts/Vazir/Vazir.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* =========================
+   2. Design tokens
+========================== */
+
+:root {
+  /* ----- Typography ----- */
+  --font-main: "Vazir", system-ui, sans-serif;
+
+  /* ----- Colors ----- */
+  --color-bg: #f2f3f6; /* پس‌زمینه‌ی صفحه */
+  --color-surface: #ffffff; /* کارت‌ها و کپسول‌ها */
+  --color-text: #45474a; /* متن اصلی */
+  --color-text-strong: #1f2937; /* تیترها */
+  --color-primary: #1159fc; /* آبی دیجی‌پی */
+  --color-primary-soft: #deedff; /* پس‌زمینه‌ی روشن آبی (فوکوس سرچ) */
+  --color-danger: #f9441f; /* نشان‌های قرمز */
+
+  /* ----- Layout ----- */
+  --container-width: 1200px; /* حداکثر عرض محتوا */
+  --container-gutter: 40px; /* مجموع فاصله‌ی دو طرف (۲۰ + ۲۰) */
+
+  /* ارتفاع هدر در بالای صفحه؛ spacer ازش استفاده می‌کنه.
+     اگه ارتفاع .header__top یا .header__main رو عوض کردی، اینم عوض کن:
+     desktop = 40 (padding) + 48 (top) + 18 + 68 (main) + 14 = 188 */
+  --header-offset: 188px;
+
+  /* فضای خالی انتهای صفحه برای منوی پایین موبایل */
+  --bottom-nav-space: 105px;
+
+  /* ----- Z-index scale (از پایین به بالا) ----- */
+  --z-header: 1000;
+  --z-dropdown: 1200;
+  --z-mobile-menu: 5000;
+  --z-bottom-nav: 6000; /* بالاتر از منوی کشویی */
+}
+
+/* =========================
+   3. Responsive tokens
+   در media query نمی‌شه از var() استفاده کرد، پس نقطه‌های شکست
+   اینجا ثبت شدن و در کل پروژه یکسان استفاده می‌شن:
+
+   1200px  => Hero فقط اسلایدر بزرگ
+   1000px  => هدر موبایل + منوی پایین
+   480px   => موبایل کوچک
+   360px   => موبایل خیلی کوچک
+========================== */
+
+@media (max-width: 1000px) {
+  :root {
+    --header-offset: 146px; /* 12 + 48 + 14 + 58 + 14 */
+    --container-gutter: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --container-gutter: 24px;
+  }
+}
+
+@media (max-width: 360px) {
+  :root {
+    --container-gutter: 20px;
+  }
+}

@@ -1,0 +1,135 @@
+/* =========================================================
+   global.css
+   ریست و استایل‌های سراسری پروژه.
+   متغیرها و فونت‌ها: variables.css
+========================================================= */
+
+@import url("./variables.css");
+
+/* =========================
+   Reset
+========================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  direction: rtl;
+  /* موبایل: مرورگر خودش متن رو بزرگ نکنه */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* لینک‌های #anchor زیر هدر ثابت گم نشن */
+  scroll-padding-top: 100px;
+}
+
+/* اسکرول نرم فقط برای کسایی که انیمیشن کم نکرده‌ان */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+  font-family: var(--font-main);
+  line-height: 1.6;
+  color: var(--color-text-strong);
+  background-color: var(--color-bg);
+  /* جلوگیری از اسکرول افقی (clip برخلاف hidden، sticky رو خراب نمی‌کنه) */
+  overflow-x: hidden;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ----- Form controls ----- */
+
+button,
+input,
+textarea,
+select {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  cursor: pointer;
+}
+
+/* =========================
+   Accessibility
+   قبلاً outline:none سراسری بود و کاربرهای کیبورد نمی‌فهمیدن
+   روی چی هستن. حالا فقط با کیبورد (focus-visible) حلقه‌ی آبی دیده می‌شه.
+========================== */
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+::selection {
+  background-color: var(--color-primary);
+  color: #ffffff;
+}
+
+/* =========================
+   Layout helpers
+========================== */
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.container {
+  width: min(100% - var(--container-gutter), var(--container-width));
+  margin-inline: auto;
+}
+
+/* موبایل: جا برای منوی پایین شناور تا آخر صفحه زیرش گم نشه */
+@media (max-width: 1000px) {
+  main {
+    padding-bottom: calc(var(--bottom-nav-space) + env(safe-area-inset-bottom));
+  }
+}

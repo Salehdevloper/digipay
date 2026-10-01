@@ -1,0 +1,273 @@
+/* =========================================================
+   Hero.css
+   0. Artwork sizes (edit these to match your images)
+   1. Shell & layout
+   2. Slider
+   3. Dots
+   4. Side banners (only above 1200px)
+   5. <= 1200px: big slider only
+   6. <= 1000px (mobile header) & small phones
+========================================================= */
+
+/* =========================
+   0. Artwork sizes
+   Type the REAL pixel size of your images here.
+   Everything else (container width, column widths, heights)
+   is calculated from these numbers, so nothing gets cropped.
+
+   Rule: --slide-h  =  --side-1-h + --side-2-h + --hero-gap(px)
+========================== */
+
+.hero {
+  /* big slider artwork (desktop) */
+  --slide-w: 935;
+  --slide-h: 500;
+
+  /* fixed side banners (desktop) */
+  --side-w: 400;
+  --side-1-h: 170; /* top banner    */
+  --side-2-h: 310; /* bottom banner */
+
+  --hero-gap: 20px;
+
+  /* slider artwork at <= 1200px */
+  --slide-mobile-ratio: 727 / 309;
+}
+
+/* =========================
+   1. Shell & layout
+========================== */
+
+.hero {
+  direction: rtl;
+  /* the header spacer already reserves the header height */
+  padding-top: 26px;
+}
+
+.hero__container {
+  display: grid;
+  /* RTL: the first column sits on the right.
+     Side column = same share of the width as in the artwork. */
+  grid-template-columns:
+    minmax(0, 1fr)
+    calc(
+      (100% - var(--hero-gap)) * var(--side-w) / (var(--slide-w) + var(--side-w))
+    );
+  gap: var(--hero-gap);
+  width: min(
+    100% - 40px,
+    calc((var(--slide-w) + var(--side-w)) * 1px + var(--hero-gap))
+  );
+  margin-inline: auto;
+}
+
+/* =========================
+   2. Slider
+   Height comes from the side column (grid stretch);
+   the slider simply fills it.
+========================== */
+
+.hero__main {
+  position: relative;
+  min-width: 0;
+}
+
+.hero__slider {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 36px;
+  touch-action: pan-y; /* vertical scroll stays native, horizontal is ours */
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+}
+
+.hero__slider:active {
+  cursor: grabbing;
+}
+
+.hero__track {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.hero__track--dragging {
+  transition: none;
+}
+
+.hero__slide {
+  position: relative;
+  display: block;
+  flex: 0 0 100%;
+  min-width: 0;
+  height: 100%;
+}
+
+.hero__slide picture {
+  display: contents;
+}
+
+.hero__slide img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* =========================
+   3. Dots
+========================== */
+
+.hero__dots {
+  position: absolute;
+  right: 0;
+  bottom: 14px;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  pointer-events: none; /* only the dots themselves are clickable */
+}
+
+.hero__dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.6);
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  pointer-events: auto;
+  transition:
+    width 0.3s ease,
+    background-color 0.3s ease;
+}
+
+/* bigger invisible touch target */
+.hero__dot::after {
+  content: "";
+  position: absolute;
+  inset: -8px -3px;
+}
+
+.hero__dot--active {
+  width: 20px;
+  background: #111;
+}
+
+/* =========================
+   4. Side banners
+   Each banner has exactly the shape of its artwork,
+   so the full image is always visible.
+========================== */
+
+.hero__side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hero-gap);
+  min-width: 0;
+}
+
+.hero__banner {
+  position: relative;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 28px;
+  transition: transform 0.25s ease;
+}
+
+.hero__banner:first-child {
+  aspect-ratio: var(--side-w) / var(--side-1-h);
+}
+
+.hero__banner:last-child {
+  aspect-ratio: var(--side-w) / var(--side-2-h);
+}
+
+.hero__banner:hover {
+  transform: translateY(-2px);
+}
+
+.hero__banner img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* =========================
+   5. <= 1200px: only the big slider
+========================== */
+
+@media (max-width: 1200px) {
+  .hero__container {
+    display: block;
+    width: min(100% - 40px, 1200px);
+  }
+
+  .hero__side {
+    display: none;
+  }
+
+  /* the slider gives the height itself again */
+  .hero__slider {
+    position: relative;
+    inset: auto;
+    aspect-ratio: var(--slide-mobile-ratio);
+    border-radius: 32px;
+  }
+
+  /* dots move below the banner */
+  .hero__dots {
+    position: static;
+    flex-wrap: wrap;
+    margin-top: 16px;
+    padding: 0 8px;
+  }
+
+  .hero__dot {
+    background: #cfd1d6;
+  }
+}
+
+/* =========================
+   6. Mobile header sizes & small phones
+========================== */
+
+@media (max-width: 1000px) {
+  .hero {
+    padding-top: 8px;
+  }
+
+  .hero__container {
+    width: calc(100% - 32px);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__container {
+    width: calc(100% - 24px);
+  }
+
+  .hero__slider {
+    border-radius: 28px;
+  }
+}
+
+@media (max-width: 360px) {
+  .hero__container {
+    width: calc(100% - 20px);
+  }
+}
