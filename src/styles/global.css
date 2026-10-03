@@ -57,6 +57,20 @@ p {
   margin: 0;
 }
 
+/* فونت Vazir فقط یک وزن (Regular) داره؛ bold مرورگر ظاهر خراب‌تری می‌سازه.
+   پس تیترها و strong هم معمولی می‌مونن. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+strong,
+b,
+th {
+  font-weight: 400;
+}
+
 a {
   color: inherit;
   text-decoration: none;

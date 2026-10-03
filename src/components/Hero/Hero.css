@@ -41,7 +41,7 @@
 .hero {
   direction: rtl;
   /* the header spacer already reserves the header height */
-  padding-top: 26px;
+  padding-top: 40px;
 }
 
 .hero__container {
@@ -248,7 +248,7 @@
 
 @media (max-width: 1000px) {
   .hero {
-    padding-top: 8px;
+    padding-top: 12px;
   }
 
   .hero__container {

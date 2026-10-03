@@ -1,0 +1,564 @@
+/* =========================================================
+   FlashDeals.css  (بخش «قسطی شگفت»)
+
+   1. Shell & container
+   2. Header (title + countdown)
+   3. Slider (viewport, track)
+   4. Deal card
+      4.1 Card   4.2 Image area   4.3 Details & prices
+   5. Tablet / mobile (<= 1000px)
+   6. Small phones (<= 480px)
+   7. Reduced motion
+========================================================= */
+
+/* =========================
+   1. Shell & container
+========================== */
+
+.flash-deals {
+  /* Same width as Hero / Services so the sections line up.
+     Better: define --container-width-wide once in variables.css. */
+  --flash-width: var(--container-width-wide, 1355px);
+  --flash-pad: 24px; /* inner side padding */
+  --flash-gap: 16px; /* space between cards */
+  --flash-card-width: 194px;
+  --flash-radius: 40px;
+
+  direction: rtl;
+  padding-bottom: var(--section-space, 80px);
+}
+
+.flash-deals__container {
+  position: relative;
+  width: min(100% - var(--container-gutter, 40px), var(--flash-width));
+  margin-inline: auto;
+  padding: 26px 0 30px;
+  overflow: hidden; /* cards are cut at the rounded edges */
+  background: linear-gradient(
+    45deg,
+    #45217f 0%,
+    #6a35c9 55%,
+    #8f47f8 100%
+  );
+  border-radius: var(--flash-radius);
+}
+
+/* =========================
+   2. Header
+========================== */
+
+.flash-deals__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+  padding-inline: 28px;
+}
+
+.flash-deals__heading {
+  color: #fff;
+  font-family: var(--font-main), sans-serif;
+  font-size: 26px;
+  font-weight: var(--font-weight-text, 400);
+  line-height: 1.5;
+}
+
+/* Hours : minutes : seconds read left-to-right, so force LTR here */
+.flash-deals__timer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  direction: ltr;
+}
+
+.flash-deals__time-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  height: 28px;
+  padding: 0 6px;
+  color: #fff;
+  font-family: var(--font-main), sans-serif;
+  font-size: 15px;
+  font-weight: var(--font-weight-text, 400);
+  line-height: 1;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+}
+
+.flash-deals__time-separator {
+  color: #fff;
+  font-size: 16px;
+  font-weight: var(--font-weight-text, 400);
+  line-height: 1;
+}
+
+/* =========================
+   3. Slider
+========================== */
+
+.flash-deals__slider {
+  position: relative;
+}
+
+.flash-deals__viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none; /* Firefox */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  cursor: grab;
+}
+
+.flash-deals__viewport::-webkit-scrollbar {
+  display: none;
+}
+
+/* While dragging with the mouse: no snapping, no smooth animation */
+.flash-deals__viewport--dragging {
+  scroll-snap-type: none;
+  cursor: grabbing;
+  user-select: none;
+}
+
+.flash-deals__viewport--dragging a {
+  pointer-events: none;
+}
+
+/* Padding lives on the track so the END padding is scrollable too */
+.flash-deals__track {
+  display: flex;
+  align-items: stretch;
+  gap: var(--flash-gap);
+  width: max-content;
+  padding-inline: var(--flash-pad);
+  padding-block: 4px; /* room for the hover lift */
+}
+
+.flash-deals__item {
+  display: flex;
+  flex: 0 0 var(--flash-card-width);
+  scroll-snap-align: start;
+  scroll-margin-inline: var(--flash-pad);
+}
+
+/* =========================
+   4. Deal card
+========================== */
+
+/* ----- 4.1 Card ----- */
+
+.flash-deals__card {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  padding: 6px;
+  color: var(--color-text-strong, #1f2937);
+  background: #fff;
+  border-radius: 28px;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+@media (hover: hover) {
+  .flash-deals__card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px rgba(20, 10, 60, 0.3);
+  }
+}
+
+/* ----- 4.2 Image area ----- */
+
+.flash-deals__media {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: var(--color-bg, #f2f3f6);
+  border-radius: 22px;
+}
+
+.flash-deals__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* shown when a product has no image yet */
+.flash-deals__placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c3c6d0;
+}
+
+.flash-deals__placeholder svg {
+  width: 44px;
+  height: 44px;
+  stroke-width: 1.4;
+}
+
+/* store logo + rating, top-left of the image */
+.flash-deals__store-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 3px 3px 4px;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 16px;
+}
+
+.flash-deals__store-badge > img,
+.flash-deals__store-badge > svg {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.flash-deals__store-badge > svg {
+  padding: 5px;
+  color: #6a35c9;
+}
+
+.flash-deals__rating {
+  color: #45474a;
+  font-family: var(--font-main), sans-serif;
+  font-size: 10px;
+  font-weight: var(--font-weight-text, 400);
+  line-height: 1.2;
+}
+
+/* installments badge + amount of one installment, bottom of the image */
+.flash-deals__overlay {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  left: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.flash-deals__installments {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  color: #fff;
+  font-family: var(--font-main), sans-serif;
+  font-size: 9px;
+  font-weight: var(--font-weight-text, 400);
+  line-height: 1.1;
+  background: linear-gradient(135deg, #4d6bff 0%, #2a43e6 100%);
+  border-radius: 50%;
+}
+
+.flash-deals__installments strong {
+  font-size: 13px;
+  font-weight: var(--font-weight-text, 400);
+}
+
+.flash-deals__installment-price {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  min-width: 0;
+  padding: 5px 10px;
+  color: #1f2937;
+  font-family: var(--font-main), sans-serif;
+  background: rgba(255, 255, 255, 0.72);
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.flash-deals__installment-price strong {
+  font-size: 12px;
+  font-weight: var(--font-weight-text, 400);
+  line-height: 1.4;
+}
+
+.flash-deals__installment-price small {
+  color: #6b6e75;
+  font-size: 9px;
+}
+
+/* ----- 4.3 Details & prices ----- */
+
+.flash-deals__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 8px 8px;
+  font-family: var(--font-main), sans-serif;
+}
+
+.flash-deals__store {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #7b7e84;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.flash-deals__store svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* two lines max, always reserves two lines so cards stay equal */
+.flash-deals__title {
+  display: -webkit-box;
+  min-height: calc(2 * 1.9em);
+  overflow: hidden;
+  color: #1f2937;
+  font-size: 13px;
+  font-weight: var(--font-weight-text, 400);
+  line-height: 1.9;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* price block sits on the physical LEFT of the card (like the design) */
+.flash-deals__pricing {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+.flash-deals__discount {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* no discount: keep the row height so prices line up across cards */
+.flash-deals__discount--empty {
+  visibility: hidden;
+}
+
+.flash-deals__percent {
+  padding: 1px 8px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: var(--font-weight-text, 400);
+  line-height: 1.7;
+  background: var(--color-danger, #f9441f);
+  border-radius: 20px;
+}
+
+.flash-deals__old-price {
+  color: #9a9da3;
+  font-size: 11px;
+  text-decoration: line-through;
+}
+
+.flash-deals__price {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.flash-deals__price strong {
+  color: #111;
+  font-size: 16px;
+  font-weight: var(--font-weight-text, 400);
+  line-height: 1.5;
+}
+
+.flash-deals__price small {
+  color: #6b6e75;
+  font-size: 10px;
+}
+
+/* =========================================================
+   5. Tablet / mobile (<= 1000px)
+   Full-width band, smaller cards, touch scrolling.
+========================================================= */
+
+@media (max-width: 1000px) {
+  .flash-deals {
+    --flash-pad: 16px;
+    --flash-gap: 10px;
+    --flash-card-width: 150px;
+    --flash-radius: 0px; /* edge-to-edge like the mobile design */
+  }
+
+  .flash-deals__container {
+    width: 100%;
+    padding: 20px 0 22px;
+  }
+
+  .flash-deals__header {
+    margin-bottom: 16px;
+    padding-inline: 16px;
+  }
+
+  .flash-deals__heading {
+    font-size: 19px;
+  }
+
+  .flash-deals__time-box {
+    min-width: 26px;
+    height: 24px;
+    font-size: 13px;
+    border-radius: 7px;
+  }
+
+  .flash-deals__time-separator {
+    font-size: 14px;
+  }
+
+  /* ----- smaller card ----- */
+
+  .flash-deals__card {
+    padding: 5px;
+    border-radius: 22px;
+  }
+
+  .flash-deals__media {
+    border-radius: 17px;
+  }
+
+  .flash-deals__placeholder svg {
+    width: 34px;
+    height: 34px;
+  }
+
+  .flash-deals__store-badge {
+    top: 6px;
+    left: 6px;
+    padding: 2px 2px 3px;
+    border-radius: 13px;
+  }
+
+  .flash-deals__store-badge > img,
+  .flash-deals__store-badge > svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .flash-deals__store-badge > svg {
+    padding: 4px;
+  }
+
+  .flash-deals__rating {
+    font-size: 9px;
+  }
+
+  .flash-deals__overlay {
+    right: 6px;
+    bottom: 6px;
+    left: 6px;
+    gap: 4px;
+  }
+
+  .flash-deals__installments {
+    width: 30px;
+    height: 30px;
+    font-size: 8px;
+  }
+
+  .flash-deals__installments strong {
+    font-size: 11px;
+  }
+
+  .flash-deals__installment-price {
+    padding: 4px 8px;
+  }
+
+  .flash-deals__installment-price strong {
+    font-size: 11px;
+  }
+
+  .flash-deals__installment-price small {
+    font-size: 8px;
+  }
+
+  .flash-deals__body {
+    gap: 6px;
+    padding: 10px 6px 6px;
+  }
+
+  .flash-deals__store {
+    font-size: 10px;
+  }
+
+  .flash-deals__store svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .flash-deals__title {
+    min-height: calc(2 * 1.8em);
+    font-size: 12px;
+    line-height: 1.8;
+  }
+
+  .flash-deals__percent {
+    padding: 0 7px;
+    font-size: 10px;
+  }
+
+  .flash-deals__old-price {
+    font-size: 10px;
+  }
+
+  .flash-deals__price strong {
+    font-size: 14px;
+  }
+
+  .flash-deals__price small {
+    font-size: 9px;
+  }
+}
+
+/* =========================================================
+   6. Small phones
+========================================================= */
+
+@media (max-width: 480px) {
+  .flash-deals {
+    --flash-card-width: 142px;
+  }
+}
+
+@media (max-width: 360px) {
+  .flash-deals {
+    --flash-card-width: 134px;
+  }
+}
+
+/* =========================================================
+   7. Reduced motion
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .flash-deals__card {
+    transition: none;
+  }
+}

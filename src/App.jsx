@@ -1,5 +1,7 @@
 import Header from "./components/Header/Header";
 import Hero from "./components/Hero/Hero";
+import Services from "./components/Services/Services";
+import FlashDeals from "./components/Flashdeals/Flashdeals";
 
 function App() {
   return (
@@ -8,6 +10,8 @@ function App() {
 
       <main>
         <Hero />
+        <Services />
+        <FlashDeals />
       </main>
     </div>
   );

@@ -1,0 +1,351 @@
+/* =========================================================
+   Services.css
+
+   1. Shell & container
+   2. Header row (title + "همه")
+   3. List
+   4. Desktop card (> 1000px)
+      4.1 Card   4.2 Overlay & image   4.3 Text   4.4 CTA & hover
+   5. Mobile tiles (<= 1000px)
+   6. Small phones (<= 480px, <= 360px)
+
+   نکته: فقط یک ساختار HTML داریم. در دسکتاپ کارت نمایش داده می‌شه
+   و در موبایل (بخش ۵) همون آیتم به تایل آیکون تبدیل می‌شه.
+========================================================= */
+
+/* =========================
+   1. Shell & container
+========================== */
+
+.services {
+  /* Keep this equal to the Hero width so both sections line up.
+     Better: define --container-width-wide once in variables.css. */
+  --services-width: var(--container-width-wide, 1355px);
+  --services-gap: 25px;
+  --services-radius: 32px;
+
+  direction: rtl;
+  /* فاصله از بخش بالایی و پایینی؛ از --section-space در variables.css */
+  padding-block: var(--section-space, 80px);
+}
+
+.services__container {
+  width: min(100% - var(--container-gutter, 40px), var(--services-width));
+  margin-inline: auto;
+}
+
+/* =========================
+   2. Header row
+========================== */
+
+.services__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px; /* فاصله‌ی تیتر تا کارت‌ها */
+}
+
+.services__title {
+  color: var(--color-text-strong);
+  font-family: var(--font-main), sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* "همه": the chevron comes after the text, so in RTL it sits on the left */
+.services__all {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-primary);
+  font-family: var(--font-main), sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  transition: opacity 0.2s ease;
+}
+
+.services__all svg {
+  width: 20px;
+  height: 20px;
+}
+
+.services__all:hover {
+  opacity: 0.75;
+}
+
+/* =========================
+   3. List
+========================== */
+
+.services__list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--services-gap);
+}
+
+/* Desktop shows only the card; the tile parts stay hidden */
+.services__icon,
+.services__label {
+  display: none;
+}
+
+/* =========================================================
+   4. Desktop card (> 1000px)
+========================================================= */
+
+/* ----- 4.1 Card ----- */
+
+.services__link {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  aspect-ratio: 320 / 338; /* shape of the card artwork */
+  overflow: hidden;
+  isolation: isolate; /* keeps image/overlay z-index inside the card */
+  color: #fff;
+  border-radius: var(--services-radius);
+}
+
+/* ----- 4.2 Image & colored overlay ----- */
+
+.services__image {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+/* Gradient tint: light at the top, strong at the bottom (like the design) */
+.services__link::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    var(--service-from) 0%,
+    var(--service-to) 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.45) 0%,
+    rgba(0, 0, 0, 0.95) 100%
+  );
+  mask-image: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.45) 0%,
+    rgba(0, 0, 0, 0.95) 100%
+  );
+}
+
+/* ----- 4.3 Text ----- */
+
+.services__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px 32px;
+  font-family: var(--font-main), sans-serif;
+  text-align: center;
+}
+
+.services__name {
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.services__description {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+/* ----- 4.4 CTA (hidden until hover / keyboard focus) ----- */
+
+.services__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  max-height: 0;
+  margin-top: 0;
+  padding: 0 34px;
+  overflow: hidden;
+  opacity: 0;
+  font-size: 16px;
+  font-weight: 400;
+  white-space: nowrap;
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: 40px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition:
+    max-height 0.35s ease,
+    margin-top 0.35s ease,
+    padding 0.35s ease,
+    opacity 0.3s ease;
+}
+
+.services__cta svg {
+  width: 20px;
+  height: 20px;
+}
+
+.services__link:focus-visible .services__cta {
+  max-height: 56px;
+  margin-top: 20px;
+  padding: 14px 34px;
+  opacity: 1;
+}
+
+/* hover only on devices that really have a pointer */
+@media (hover: hover) {
+  .services__link:hover .services__image {
+    transform: scale(1.06);
+  }
+
+  .services__link:hover .services__cta {
+    max-height: 56px;
+    margin-top: 20px;
+    padding: 14px 34px;
+    opacity: 1;
+  }
+}
+
+/* =========================================================
+   5. Mobile tiles (<= 1000px)
+   The card becomes a white panel with 4 icon tiles in a row.
+========================================================= */
+
+@media (max-width: 1000px) {
+  .services__header {
+    margin-bottom: 20px;
+  }
+
+  .services__title {
+    font-size: 18px;
+  }
+
+  .services__all {
+    font-size: 15px;
+  }
+
+  /* white panel */
+  .services__list {
+    gap: 8px;
+    padding: 28px 12px 22px;
+    background: var(--color-surface, #fff);
+    border-radius: var(--services-radius);
+    box-shadow: 0 8px 30px rgba(28, 47, 75, 0.04);
+  }
+
+  /* card -> tile */
+  .services__link {
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    aspect-ratio: auto;
+    overflow: visible;
+    color: var(--color-text-strong);
+    border-radius: 0;
+  }
+
+  /* hide the card parts */
+  .services__image,
+  .services__body,
+  .services__link::before {
+    display: none;
+  }
+
+  /* show the tile parts */
+  .services__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(
+      45deg,
+      var(--service-from) 0%,
+      var(--service-to) 100%
+    );
+    border-radius: 22px;
+    transition: transform 0.2s ease;
+  }
+
+  .services__icon svg {
+    width: 36px;
+    height: 36px;
+    color: #fff;
+  }
+
+  .services__label {
+    display: block;
+    font-family: var(--font-main), sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  .services__link:active .services__icon {
+    transform: scale(0.94);
+  }
+}
+
+/* =========================================================
+   6. Small phones
+========================================================= */
+
+@media (max-width: 480px) {
+  .services__list {
+    padding: 22px 8px 18px;
+  }
+
+  .services__icon {
+    width: 62px;
+    height: 62px;
+    border-radius: 20px;
+  }
+
+  .services__icon svg {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@media (max-width: 360px) {
+  .services__icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 17px;
+  }
+
+  .services__icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .services__label {
+    font-size: 11px;
+  }
+}
+
+/* =========================================================
+   Reduced motion
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .services__image,
+  .services__cta,
+  .services__icon {
+    transition: none;
+  }
+}

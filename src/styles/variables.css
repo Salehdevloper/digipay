@@ -61,6 +61,10 @@
      desktop = 40 (padding) + 48 (top) + 18 + 68 (main) + 14 = 188 */
   --header-offset: 188px;
 
+  /* فاصله‌ی عمودی بین بخش‌های صفحه (Hero، Services، ...).
+     عدد بزرگ‌تر = صفحه بازتر. در موبایل خودکار کمتر می‌شه (پایین فایل). */
+  --section-space: 80px;
+
   /* فضای خالی انتهای صفحه برای منوی پایین موبایل */
   --bottom-nav-space: 105px;
 
@@ -85,6 +89,7 @@
 @media (max-width: 1000px) {
   :root {
     --header-offset: 146px; /* 12 + 48 + 14 + 58 + 14 */
+    --section-space: 48px;
     --container-gutter: 32px;
   }
 }
