@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import { FiImage, FiShoppingBag } from "react-icons/fi";
 
-import "./FlashDeals.css";
+import "./Flashdeals.css";
 
 import vitaminD3 from "../../assets/images/Flashdeals/vitaminD3.webp";
 import mosbatSabz from "../../assets/images/storelogo/mosbat-sabz.png";
