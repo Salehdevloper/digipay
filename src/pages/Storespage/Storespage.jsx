@@ -2,7 +2,7 @@ import { useSearchParams } from "react-router-dom";
 
 import BannerSlider from "../../components/Bannerslider/Bannerslider";
 import FeaturedStores from "../../components/Featuredstores/Featuredstores";
-import InStoreHero from "../../components/Instorehero/InStorehero";
+import InStoreHero from "../../components/Instorehero/Instorehero";
 import StoreCategories from "../../components/Storecategories/Storecategories";
 import StoresTabs from "../../components/Storestabs/Storestabs";
 
@@ -10,7 +10,7 @@ import { getStoreMode } from "../../constants/storeModes";
 import { usePageTitle } from "../../hooks/usepagetitle";
 import { resolveImage } from "../../utils/Resolveimage";
 
-import "./StoresPage.css";
+import "./Storespage.css";
 
 /* =========================================================
    Images
