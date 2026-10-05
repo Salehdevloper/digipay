@@ -1,19 +1,47 @@
+import { useEffect } from "react";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
+
 import Header from "./components/Header/Header";
-import Hero from "./components/Hero/Hero";
-import Services from "./components/Services/Services";
-import FlashDeals from "./components/Flashdeals/Flashdeals";
+
+import HomePage from "./pages/Homepage/Homepage";
+import StoresPage from "./pages/Storespage/Storespage";
+
+import "./styles/responsive.css";
+
+/** Every page change starts from the top of the page. */
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 function App() {
   return (
-    <div className="app">
-      <Header />
+    <BrowserRouter>
+      <ScrollToTop />
 
-      <main>
-        <Hero />
-        <Services />
-        <FlashDeals />
-      </main>
-    </div>
+      <div className="app">
+        <Header />
+
+        <main>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/stores" element={<StoresPage />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </main>
+      </div>
+    </BrowserRouter>
   );
 }
 

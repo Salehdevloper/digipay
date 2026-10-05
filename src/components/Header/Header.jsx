@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 
 import {
   FiBriefcase,
   FiChevronDown,
+  FiChevronLeft,
   FiChevronUp,
   FiClock,
   FiCreditCard,
@@ -20,6 +21,10 @@ import {
 } from "react-icons/fi";
 
 import { RiBankCardLine } from "react-icons/ri";
+
+import { Link, NavLink, useLocation, useSearchParams } from "react-router-dom";
+
+import { STORE_MODE_ITEMS, getStoreMode } from "../../constants/storeModes";
 
 import digipayLogo from "../../assets/images/logo/digipay-logo.svg";
 
@@ -70,9 +75,9 @@ const MENU_ITEMS = [
 ========================== */
 
 const QUICK_LINKS = [
-  { id: "home", label: "خانه", icon: FiHome, active: true },
+  { id: "home", label: "خانه", icon: FiHome, to: "/", end: true },
   { id: "services", label: "خدمات", icon: FiGrid },
-  { id: "stores", label: "فروشگاه‌ها", icon: FiShoppingBag, badge: "%" },
+  { id: "stores", label: "فروشگاه‌ها", icon: FiShoppingBag, badge: "%", to: "/stores" },
   { id: "payment", label: "پرداخت", icon: RiBankCardLine },
 ];
 
@@ -149,6 +154,60 @@ function useAutoCloseMenu(isOpen, onClose) {
 }
 
 const SEARCH_PLACEHOLDER = "جستجو در خدمات، فروشگاه‌ها، محصولات";
+
+/* =========================================================
+   Quick link: router link when the page exists, plain "#" otherwise.
+   The active page gets `activeClassName` automatically.
+========================================================= */
+
+function QuickLink({ link, className, activeClassName, children }) {
+  if (!link.to) {
+    return (
+      <a href="#" className={className}>
+        {children}
+      </a>
+    );
+  }
+
+  return (
+    <NavLink
+      to={link.to}
+      end={link.end}
+      className={({ isActive }) =>
+        `${className} ${isActive ? activeClassName : ""}`
+      }
+    >
+      {children}
+    </NavLink>
+  );
+}
+
+/* =========================================================
+   Sub-navigation shown next to "فروشگاه‌ها" while we are on
+   the stores page:  فروشگاه‌ها ‹  آنلاین  حضوری
+========================================================= */
+
+function StoresSubNavigation({ activeMode }) {
+  return (
+    <div className="header__sub-nav" role="group" aria-label="نوع فروشگاه‌ها">
+      <FiChevronLeft className="header__sub-nav-arrow" aria-hidden="true" />
+
+      {STORE_MODE_ITEMS.map(({ id, shortLabel }) => (
+        <Link
+          key={id}
+          to={`/stores?mode=${id}`}
+          replace
+          aria-current={activeMode === id ? "page" : undefined}
+          className={`header__sub-link ${
+            activeMode === id ? "header__sub-link--active" : ""
+          }`}
+        >
+          {shortLabel}
+        </Link>
+      ))}
+    </div>
+  );
+}
 
 /* =========================================================
    Search box (desktop pill + mobile bar)
@@ -313,19 +372,22 @@ function MobileMenu({ isOpen, openItem, onToggleItem, onClose }) {
 function BottomNavigation() {
   return (
     <nav className="header__bottom-navigation" aria-label="دسترسی سریع موبایل">
-      {QUICK_LINKS.map(({ id, label, icon: Icon, active, badge }) => (
-        <a
-          href="#"
-          key={id}
-          className={`header__bottom-link ${
-            active ? "header__bottom-link--active" : ""
-          }`}
-        >
-          <Icon />
-          <span>{label}</span>
-          {badge && <span className="header__bottom-badge">{badge}</span>}
-        </a>
-      ))}
+      {QUICK_LINKS.map((link) => {
+        const { id, label, icon: Icon, badge } = link;
+
+        return (
+          <QuickLink
+            key={id}
+            link={link}
+            className="header__bottom-link"
+            activeClassName="header__bottom-link--active"
+          >
+            <Icon />
+            <span>{label}</span>
+            {badge && <span className="header__bottom-badge">{badge}</span>}
+          </QuickLink>
+        );
+      })}
 
       <a href="#" className="header__bottom-link">
         <FiUser />
@@ -341,6 +403,12 @@ function BottomNavigation() {
 
 function Header() {
   const isScrolled = useScrollState();
+
+  /* Current page: decides whether the stores sub-navigation is shown */
+  const { pathname } = useLocation();
+  const [searchParams] = useSearchParams();
+  const isStoresPage = pathname.startsWith("/stores");
+  const storeMode = getStoreMode(searchParams.get("mode"));
 
   const [searchValue, setSearchValue] = useState("");
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
@@ -399,9 +467,9 @@ function Header() {
         <div className="header__container">
           {/* ---------- Top row ---------- */}
           <div className="header__top">
-            <a href="#" className="header__logo" aria-label="دیجی‌پی">
+            <Link to="/" className="header__logo" aria-label="دیجی‌پی">
               <img src={digipayLogo} alt="دیجی‌پی" />
-            </a>
+            </Link>
 
             <TopNavigation />
 
@@ -442,21 +510,29 @@ function Header() {
             </button>
 
             <nav className="header__navigation" aria-label="دسترسی سریع">
-              {QUICK_LINKS.map(({ id, label, icon: Icon, active, badge }) => (
-                <a
-                  href="#"
-                  key={id}
-                  className={`header__nav-link ${
-                    active ? "header__nav-link--active" : ""
-                  }`}
-                >
-                  <Icon />
-                  <span>{label}</span>
-                  {badge && (
-                    <span className="header__notification">{badge}</span>
-                  )}
-                </a>
-              ))}
+              {QUICK_LINKS.map((link) => {
+                const { id, label, icon: Icon, badge } = link;
+
+                return (
+                  <Fragment key={id}>
+                    <QuickLink
+                      link={link}
+                      className="header__nav-link"
+                      activeClassName="header__nav-link--active"
+                    >
+                      <Icon />
+                      <span>{label}</span>
+                      {badge && (
+                        <span className="header__notification">{badge}</span>
+                      )}
+                    </QuickLink>
+
+                    {id === "stores" && isStoresPage && (
+                      <StoresSubNavigation activeMode={storeMode} />
+                    )}
+                  </Fragment>
+                );
+              })}
             </nav>
 
             <button

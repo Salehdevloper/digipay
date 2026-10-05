@@ -1,0 +1,174 @@
+/* =========================================================
+   FeaturedStores.css  («فروشگاه‌های منتخب»)
+   1. Header   2. Logo list   3. Mobile
+========================================================= */
+
+.featured-stores {
+  direction: rtl;
+}
+
+/* =========================
+   1. Header
+========================== */
+
+.featured-stores__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.featured-stores__title {
+  color: var(--color-text-strong, #1f2937);
+  font-family: var(--font-main), sans-serif;
+  font-size: 18px;
+  font-weight: var(--font-weight-text, 400);
+  line-height: 1.6;
+}
+
+.featured-stores__subtitle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  color: var(--color-primary, #1159fc);
+  font-family: var(--font-main), sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.featured-stores__subtitle svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.featured-stores__all {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-primary, #1159fc);
+  font-family: var(--font-main), sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+}
+
+.featured-stores__all svg {
+  width: 20px;
+  height: 20px;
+}
+
+.featured-stores__all:hover {
+  opacity: 0.75;
+}
+
+/* =========================
+   2. Logo list
+   Few stores stretch to fill the row, many stores scroll sideways.
+========================== */
+
+.featured-stores__list {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(100px, 1fr);
+  gap: 18px;
+  padding: 4px 2px 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-snap-type: x proximity;
+  cursor: grab;
+}
+
+.featured-stores__list::-webkit-scrollbar {
+  display: none;
+}
+
+/* while the mouse drags: no snapping, no text selection */
+.featured-stores__list--dragging {
+  scroll-snap-type: none;
+  cursor: grabbing;
+  user-select: none;
+}
+
+.featured-stores__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  scroll-snap-align: start;
+}
+
+.featured-stores__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  max-width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--color-surface, #fff);
+  border-radius: 50%;
+  box-shadow: 0 6px 20px rgba(28, 47, 75, 0.05);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.featured-stores__logo img {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+}
+
+.featured-stores__initial {
+  color: var(--color-primary, #1159fc);
+  font-family: var(--font-main), sans-serif;
+  font-size: 32px;
+  font-weight: var(--font-weight-text, 400);
+  line-height: 1;
+}
+
+.featured-stores__name {
+  color: var(--color-text, #45474a);
+  font-family: var(--font-main), sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+@media (hover: hover) {
+  .featured-stores__item:hover .featured-stores__logo {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 28px rgba(28, 47, 75, 0.1);
+  }
+}
+
+/* =========================
+   3. Mobile
+========================== */
+
+@media (max-width: 1000px) {
+  .featured-stores__header {
+    margin-bottom: 20px;
+  }
+
+  .featured-stores__list {
+    grid-auto-columns: 84px;
+    gap: 14px;
+  }
+
+  .featured-stores__logo {
+    width: 76px;
+  }
+
+  .featured-stores__initial {
+    font-size: 26px;
+  }
+
+  .featured-stores__name {
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,91 @@
+/* =========================================================
+   StoresTabs.css
+   1. Container & indicator
+   2. Tabs
+   3. Small phones
+========================================================= */
+
+/* =========================
+   1. Container & indicator
+========================== */
+
+.stores-tabs {
+  --tabs-padding: 4px;
+
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--tab-count), 1fr);
+  width: min(100%, 360px);
+  padding: var(--tabs-padding);
+  direction: rtl;
+  background: var(--color-surface, #fff);
+  border-radius: 18px;
+  box-shadow: 0 6px 24px rgba(28, 47, 75, 0.06);
+}
+
+/* The blue pill that slides to the active tab.
+   RTL: the first tab is on the right, so we move to the left (-100%). */
+.stores-tabs__indicator {
+  position: absolute;
+  top: var(--tabs-padding);
+  right: var(--tabs-padding);
+  bottom: var(--tabs-padding);
+  width: calc((100% - var(--tabs-padding) * 2) / var(--tab-count));
+  background: var(--color-primary, #1159fc);
+  border-radius: 14px;
+  box-shadow: 0 6px 16px rgba(17, 89, 252, 0.28);
+  transform: translateX(calc(var(--tab-index) * -100%));
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* =========================
+   2. Tabs
+========================== */
+
+.stores-tabs__tab {
+  position: relative;
+  z-index: 1;
+  min-height: 46px;
+  padding: 0 12px;
+  color: #7b7e84;
+  font-family: var(--font-main), sans-serif;
+  font-size: 14px;
+  font-weight: var(--font-weight-text, 400);
+  line-height: 1.5;
+  white-space: nowrap;
+  background: transparent;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: color 0.25s ease;
+}
+
+.stores-tabs__tab:hover {
+  color: var(--color-text, #45474a);
+}
+
+.stores-tabs__tab--active,
+.stores-tabs__tab--active:hover {
+  color: #fff;
+}
+
+/* =========================
+   3. Small phones
+========================== */
+
+@media (max-width: 480px) {
+  .stores-tabs {
+    width: 100%;
+  }
+
+  .stores-tabs__tab {
+    min-height: 42px;
+    font-size: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stores-tabs__indicator,
+  .stores-tabs__tab {
+    transition: none;
+  }
+}

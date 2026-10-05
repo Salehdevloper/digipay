@@ -1,0 +1,156 @@
+/* =========================================================
+   BannerSlider.css  (اسلایدر وسط‌چین با بنرهای کناری)
+
+   1. Variables
+   2. Viewport & slides
+   3. Dots
+   4. Tablet / mobile
+========================================================= */
+
+/* =========================
+   1. Variables
+   Type the REAL size of your banner images here, so nothing is cropped.
+========================== */
+
+.banner-slider {
+  --slide-w: 935; /* banner image width  (px) */
+  --slide-h: 500; /* banner image height (px) */
+  --slide-fraction: 0.62; /* active banner width / slider width */
+  --slide-gap: 20px; /* space between banners */
+  --slide-radius: 32px;
+
+  direction: rtl;
+}
+
+/* =========================
+   2. Viewport & slides
+========================== */
+
+/* The slider is exactly as tall as one banner. */
+.banner-slider__viewport {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: calc(var(--slide-w) / var(--slide-fraction)) / var(--slide-h);
+  touch-action: pan-y; /* vertical scroll stays native, horizontal is ours */
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+}
+
+.banner-slider__viewport--dragging {
+  cursor: grabbing;
+}
+
+/* Every slide sits in the center; --offset pushes it to its place.
+   The percentage in translateX is the slide's own width. */
+.banner-slider__slide {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: calc(var(--slide-fraction) * 100%);
+  height: 100%;
+  opacity: 0.45;
+  transform: translateX(
+    calc(
+      -50% + var(--offset) * -1 * (100% + var(--slide-gap)) + var(--drag, 0px)
+    )
+  );
+  transition:
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.6s ease;
+}
+
+.banner-slider__slide--active {
+  opacity: 1;
+}
+
+/* soft placeholder until the image file is added */
+.banner-slider__slide--empty {
+  background: #e4e8f2;
+  border-radius: var(--slide-radius);
+}
+
+/* no animation while the finger / mouse is dragging */
+.banner-slider__viewport--dragging .banner-slider__slide {
+  transition: none;
+}
+
+.banner-slider__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  border-radius: var(--slide-radius);
+  transform: scale(0.94);
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.banner-slider__slide--active .banner-slider__image {
+  transform: scale(1);
+}
+
+/* =========================
+   3. Dots
+========================== */
+
+.banner-slider__dots {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 18px;
+}
+
+.banner-slider__dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  background: #cfd1d6;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    width 0.3s ease,
+    background-color 0.3s ease;
+}
+
+/* bigger invisible touch target */
+.banner-slider__dot::after {
+  content: "";
+  position: absolute;
+  inset: -8px -3px;
+}
+
+.banner-slider__dot--active {
+  width: 20px;
+  background: #111;
+}
+
+/* =========================
+   4. Tablet / mobile
+   Wider banner, smaller peek on each side.
+========================== */
+
+@media (max-width: 1000px) {
+  .banner-slider {
+    --slide-w: 727;
+    --slide-h: 309;
+    --slide-fraction: 0.88;
+    --slide-gap: 12px;
+    --slide-radius: 24px;
+  }
+
+  .banner-slider__dots {
+    margin-top: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .banner-slider__slide,
+  .banner-slider__image {
+    transition: none;
+  }
+}

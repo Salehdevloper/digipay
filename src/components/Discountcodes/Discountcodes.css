@@ -1,0 +1,624 @@
+/* =========================================================
+   DiscountCodes.css  (بخش «کد تخفیف»)
+
+   1. Section & header
+   2. Slider
+   3. Ticket card
+   4. Modal
+   5. Tablet / mobile (<= 1000px)
+   6. Reduced motion
+========================================================= */
+
+/* =========================
+   1. Section & header
+========================== */
+
+.discount-codes {
+  --codes-width: var(--container-width-wide, 1355px);
+  --codes-gap: 16px;
+  --codes-card-width: 340px;
+  --codes-card-height: 108px;
+  --codes-stub-width: 128px;
+  --codes-notch: 9px;
+  --codes-bg: var(--color-bg, #f2f3f6);
+  --codes-blue: #2a43e6;
+  --codes-line: #d9dbe3;
+
+  direction: rtl;
+  padding-bottom: var(--section-space, 80px);
+  font-family: var(--font-main), sans-serif;
+}
+
+.discount-codes__container {
+  width: min(100% - var(--container-gutter, 40px), var(--codes-width));
+  margin-inline: auto;
+}
+
+.discount-codes__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.discount-codes__heading {
+  color: #111;
+  font-size: 20px;
+  font-weight: var(--font-weight-title, 700);
+  line-height: 1.5;
+}
+
+.discount-codes__all {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--codes-blue);
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.discount-codes__all svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* =========================
+   2. Slider
+========================== */
+
+.discount-codes__viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  cursor: grab;
+}
+
+.discount-codes__viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.discount-codes__viewport--dragging {
+  scroll-snap-type: none;
+  cursor: grabbing;
+  user-select: none;
+}
+
+.discount-codes__viewport--dragging button {
+  pointer-events: none;
+}
+
+.discount-codes__track {
+  display: flex;
+  align-items: stretch;
+  gap: var(--codes-gap);
+  width: max-content;
+  margin: 0;
+  padding: var(--codes-notch) 0; /* room for the ticket notches */
+  list-style: none;
+}
+
+.discount-codes__item {
+  flex: 0 0 var(--codes-card-width);
+  scroll-snap-align: start;
+}
+
+/* =========================
+   3. Ticket card
+========================== */
+
+.discount-codes__card {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  height: var(--codes-card-height);
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  background: #fff;
+  border: 0;
+  border-radius: 22px;
+  cursor: inherit;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.discount-codes__card:focus-visible {
+  outline: 2px solid var(--codes-blue);
+  outline-offset: 3px;
+}
+
+@media (hover: hover) {
+  .discount-codes__card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 26px rgba(30, 30, 70, 0.12);
+  }
+}
+
+.discount-codes__main {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  padding-inline: 16px;
+}
+
+.discount-codes__logo {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  overflow: hidden;
+  color: #6a35c9;
+  background: #fff;
+  border: 4px solid var(--codes-bg);
+  border-radius: 50%;
+}
+
+.discount-codes__logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.discount-codes__logo svg {
+  width: 24px;
+  height: 24px;
+}
+
+.discount-codes__info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.discount-codes__store {
+  overflow: hidden;
+  color: #6b6e75;
+  font-size: 13px;
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.discount-codes__amount {
+  color: #1f2937;
+  font-size: 14px;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.discount-codes__amount strong {
+  font-size: 22px;
+  font-weight: var(--font-weight-title, 700);
+}
+
+/* tear-off part with the code: physical LEFT of the card */
+.discount-codes__stub {
+  position: relative;
+  display: flex;
+  flex: 0 0 var(--codes-stub-width);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-inline-start: 2px dashed var(--codes-line);
+}
+
+.discount-codes__stub::before,
+.discount-codes__stub::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: calc(var(--codes-notch) * -1 - 1px);
+  width: calc(var(--codes-notch) * 2);
+  height: calc(var(--codes-notch) * 2);
+  background: var(--codes-bg);
+  border-radius: 50%;
+}
+
+.discount-codes__stub::before {
+  top: calc(var(--codes-notch) * -1);
+}
+
+.discount-codes__stub::after {
+  bottom: calc(var(--codes-notch) * -1);
+}
+
+.discount-codes__stub-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #6b6e75;
+  font-size: 12px;
+}
+
+.discount-codes__stub-label svg {
+  width: 14px;
+  height: 14px;
+  color: #f9441f;
+}
+
+.discount-codes__stub-code {
+  color: #111;
+  font-size: 13px;
+  font-weight: var(--font-weight-title, 700);
+  letter-spacing: 0.04em;
+}
+
+/* =========================
+   4. Modal
+========================== */
+
+.discount-modal__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(20, 15, 40, 0.45);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  animation: discount-fade 0.2s ease;
+}
+
+.discount-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: min(100%, 750px);
+  max-height: calc(100dvh - 32px);
+  padding: 24px;
+  overflow-y: auto;
+  color: #1f2937;
+  font-family: var(--font-main), sans-serif;
+  background: #fff;
+  border-radius: 40px;
+  animation: discount-pop 0.25s ease;
+}
+
+.discount-modal__header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 20px;
+  border-bottom: 2px dashed #e3e5ea;
+}
+
+.discount-modal__header .discount-codes__logo {
+  width: 76px;
+  height: 76px;
+  border-width: 5px;
+}
+
+.discount-modal__header .discount-codes__logo svg {
+  width: 30px;
+  height: 30px;
+}
+
+.discount-modal__heading {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.discount-modal__title {
+  color: #111;
+  font-size: 22px;
+  font-weight: var(--font-weight-title, 700);
+  line-height: 1.5;
+}
+
+.discount-modal__subtitle {
+  color: #3c3f46;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.discount-modal__close {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  color: #1f2937;
+  background: #d9dbe0;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.discount-modal__close svg {
+  width: 20px;
+  height: 20px;
+}
+
+.discount-modal__close:hover {
+  background: #c9ccd3;
+}
+
+.discount-modal__close:focus-visible,
+.discount-modal__copy:focus-visible,
+.discount-modal__site:focus-visible {
+  outline: 2px solid var(--codes-blue, #2a43e6);
+  outline-offset: 2px;
+}
+
+.discount-modal__body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.discount-modal__expiry {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #111;
+  font-size: 15px;
+}
+
+.discount-modal__expiry svg {
+  width: 20px;
+  height: 20px;
+}
+
+.discount-modal__steps-title {
+  color: #111;
+  font-size: 14px;
+  font-weight: var(--font-weight-title, 700);
+}
+
+.discount-modal__steps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.discount-modal__step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #45474a;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.discount-modal__step-number {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  color: #2a43e6;
+  font-size: 14px;
+  background: #eef0f7;
+  border-radius: 50%;
+}
+
+.discount-modal__footer {
+  display: flex;
+  align-items: stretch;
+  gap: 14px;
+}
+
+.discount-modal__code-box {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+  padding: 6px 6px 6px 8px;
+  padding-inline-start: 24px;
+  background: #f2f3f6;
+  border: 1px solid #d3d6de;
+  border-radius: 999px;
+}
+
+.discount-modal__code {
+  overflow: hidden;
+  color: #111;
+  font-size: 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.discount-modal__copy,
+.discount-modal__site {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 52px;
+  padding: 0 24px;
+  color: #2a43e6;
+  font: inherit;
+  font-size: 15px;
+  text-decoration: none;
+  white-space: nowrap;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.discount-modal__copy {
+  background: #fff;
+}
+
+.discount-modal__copy--done {
+  color: #0f9d58;
+}
+
+.discount-modal__site {
+  flex: 0 0 auto;
+  min-width: 232px;
+  background: #e8ecfb;
+}
+
+.discount-modal__site:hover {
+  background: #dce2f8;
+}
+
+.discount-modal__copy svg,
+.discount-modal__site svg {
+  width: 20px;
+  height: 20px;
+}
+
+@keyframes discount-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes discount-pop {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+}
+
+/* =========================================================
+   5. Tablet / mobile (<= 1000px)
+========================================================= */
+
+@media (max-width: 1000px) {
+  .discount-codes {
+    --codes-gap: 12px;
+    --codes-card-width: 286px;
+    --codes-card-height: 96px;
+    --codes-stub-width: 108px;
+  }
+
+  .discount-codes__container {
+    width: 100%;
+  }
+
+  .discount-codes__header {
+    padding-inline: 16px;
+    margin-bottom: 12px;
+  }
+
+  .discount-codes__heading {
+    font-size: 18px;
+  }
+
+  /* start / end padding lives on the track so it scrolls */
+  .discount-codes__track {
+    padding-inline: 16px;
+  }
+
+  .discount-codes__item {
+    scroll-margin-inline: 16px;
+  }
+
+  .discount-codes__main {
+    gap: 10px;
+    padding-inline: 12px;
+  }
+
+  .discount-codes__logo {
+    width: 54px;
+    height: 54px;
+    border-width: 3px;
+  }
+
+  .discount-codes__amount strong {
+    font-size: 19px;
+  }
+
+  /* ----- modal: bottom sheet ----- */
+
+  .discount-modal__overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .discount-modal {
+    gap: 16px;
+    width: 100%;
+    max-height: 92dvh;
+    padding: 20px 16px;
+    border-radius: 28px 28px 0 0;
+  }
+
+  .discount-modal__header {
+    gap: 10px;
+    padding-bottom: 16px;
+  }
+
+  .discount-modal__header .discount-codes__logo {
+    width: 56px;
+    height: 56px;
+    border-width: 4px;
+  }
+
+  .discount-modal__title {
+    font-size: 18px;
+  }
+
+  .discount-modal__subtitle,
+  .discount-modal__step {
+    font-size: 13px;
+  }
+
+  .discount-modal__close {
+    width: 38px;
+    height: 38px;
+  }
+
+  .discount-modal__footer {
+    flex-direction: column;
+  }
+
+  .discount-modal__code-box {
+    padding-inline-start: 16px;
+  }
+
+  .discount-modal__copy,
+  .discount-modal__site {
+    height: 46px;
+    padding: 0 18px;
+    font-size: 14px;
+  }
+
+  .discount-modal__site {
+    min-width: 0;
+  }
+}
+
+/* =========================================================
+   6. Reduced motion
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .discount-codes__card,
+  .discount-modal__overlay,
+  .discount-modal {
+    transition: none;
+    animation: none;
+  }
+}

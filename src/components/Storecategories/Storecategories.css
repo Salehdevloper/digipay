@@ -1,0 +1,92 @@
+/* =========================================================
+   StoreCategories.css
+   Tiles stretch to fill the row on desktop and scroll on mobile.
+========================================================= */
+
+.store-categories {
+  direction: rtl;
+}
+
+.store-categories__list {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(96px, 1fr);
+  gap: 14px;
+  padding: 4px 2px 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-snap-type: x proximity;
+  cursor: grab;
+}
+
+.store-categories__list::-webkit-scrollbar {
+  display: none;
+}
+
+/* while the mouse drags: no snapping, no text selection */
+.store-categories__list--dragging {
+  scroll-snap-type: none;
+  cursor: grabbing;
+  user-select: none;
+}
+
+.store-categories__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  scroll-snap-align: start;
+}
+
+.store-categories__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 105px;
+  aspect-ratio: 1;
+  background: var(--color-surface, #fff);
+  border-radius: 28px;
+  box-shadow: 0 6px 20px rgba(28, 47, 75, 0.04);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.store-categories__icon img {
+  width: 76%;
+  height: 76%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.store-categories__label {
+  color: var(--color-text, #45474a);
+  font-family: var(--font-main), sans-serif;
+  font-size: 13px;
+  line-height: 1.7;
+  text-align: center;
+}
+
+@media (hover: hover) {
+  .store-categories__item:hover .store-categories__icon {
+    box-shadow: 0 14px 28px rgba(28, 47, 75, 0.1);
+    transform: translateY(-4px);
+  }
+}
+
+@media (max-width: 1000px) {
+  .store-categories__list {
+    grid-auto-columns: 84px;
+    gap: 12px;
+  }
+
+  .store-categories__icon {
+    max-width: 84px;
+    border-radius: 24px;
+  }
+
+  .store-categories__label {
+    font-size: 12px;
+  }
+}
