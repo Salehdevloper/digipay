@@ -16,12 +16,12 @@ import "./styles/responsive.css";
 
 /* Every page is loaded only when it is opened.
    While it loads, <PageLoader /> (the blue spinner) is shown. */
-const HomePage = lazy(() => import("./pages/Homepage/Homepage"));
-const StoresPage = lazy(() => import("./pages/Storespage/Storespage"));
+const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
+const StoresPage = lazy(() => import("./pages/StoresPage/StoresPage"));
 const StoreDetailPage = lazy(() => import("./pages/StoreDetailPage/StoreDetailPage"));
-const PaymentPage = lazy(() => import("./pages/PaymentPage/Paymentpage"));
+const PaymentPage = lazy(() => import("./pages/PaymentPage/PaymentPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage"));
-const TermsPage = lazy(() => import("./pages/TermsPage/Termspage"));
+const TermsPage = lazy(() => import("./pages/TermsPage/TermsPage"));
 
 /** Every page change starts from the top of the page. */
 function ScrollToTop() {
