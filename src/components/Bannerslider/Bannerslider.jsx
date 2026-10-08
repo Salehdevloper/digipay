@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-import "./Bannerslider.css";
+import "./BannerSlider.css";
 
 /* =========================================================
    Config

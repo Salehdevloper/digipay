@@ -9,6 +9,7 @@ import {
   FiCreditCard,
   FiGrid,
   FiHome,
+  FiLogOut,
   FiMenu,
   FiSearch,
   FiShield,
@@ -25,6 +26,7 @@ import { RiBankCardLine } from "react-icons/ri";
 import { Link, NavLink, useLocation, useSearchParams } from "react-router-dom";
 
 import { STORE_MODE_ITEMS, getStoreMode } from "../../constants/storeModes";
+import { useAuth } from "../../hooks/useAuth";
 
 import digipayLogo from "../../assets/images/logo/digipay-logo.svg";
 
@@ -78,7 +80,7 @@ const QUICK_LINKS = [
   { id: "home", label: "خانه", icon: FiHome, to: "/", end: true },
   { id: "services", label: "خدمات", icon: FiGrid },
   { id: "stores", label: "فروشگاه‌ها", icon: FiShoppingBag, badge: "%", to: "/stores" },
-  { id: "payment", label: "پرداخت", icon: RiBankCardLine },
+  { id: "payment", label: "پرداخت", icon: RiBankCardLine, to: "/payment" },
 ];
 
 /* =========================================================
@@ -206,6 +208,36 @@ function StoresSubNavigation({ activeMode }) {
         </Link>
       ))}
     </div>
+  );
+}
+
+/* =========================================================
+   Login / logout button.
+   Guest: link to /login (remembers the current page, so after login
+   the user comes back here). Logged in: logout button.
+========================================================= */
+
+function AuthAction({ className, children, loggedInChildren, label }) {
+  const { isAuthenticated, logout } = useAuth();
+  const location = useLocation();
+
+  if (isAuthenticated) {
+    return (
+      <button
+        type="button"
+        className={className}
+        onClick={logout}
+        aria-label={label ?? "خروج از حساب"}
+      >
+        {loggedInChildren ?? children}
+      </button>
+    );
+  }
+
+  return (
+    <Link to="/login" state={{ from: location }} className={className}>
+      {children}
+    </Link>
   );
 }
 
@@ -389,10 +421,18 @@ function BottomNavigation() {
         );
       })}
 
-      <a href="#" className="header__bottom-link">
+      <AuthAction
+        className="header__bottom-link"
+        loggedInChildren={
+          <>
+            <FiLogOut />
+            <span>خروج</span>
+          </>
+        }
+      >
         <FiUser />
         <span>ورود</span>
-      </a>
+      </AuthAction>
     </nav>
   );
 }
@@ -473,10 +513,18 @@ function Header() {
 
             <TopNavigation />
 
-            <a href="#" className="header__login">
+            <AuthAction
+              className="header__login"
+              loggedInChildren={
+                <>
+                  <span>خروج</span>
+                  <FiLogOut />
+                </>
+              }
+            >
               <span>ورود / ثبت‌نام</span>
               <FiUser />
-            </a>
+            </AuthAction>
 
             <button
               type="button"
@@ -535,13 +583,13 @@ function Header() {
               })}
             </nav>
 
-            <button
-              type="button"
+            <AuthAction
               className="header__user"
-              aria-label="حساب کاربری"
+              label="خروج از حساب"
+              loggedInChildren={<FiLogOut />}
             >
               <FiUser />
-            </button>
+            </AuthAction>
 
             <SearchBox
               variant="desktop"

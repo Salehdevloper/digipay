@@ -9,7 +9,7 @@ import saatMochi from "../../assets/images/Flashdeals/saat-mochi.webp";
 import laptop from "../../assets/images/Flashdeals/laptop.webp";
 import topBlue from "../../assets/images/Flashdeals/top-blue.webp";
 
-import "./Flashdeals.css";
+import "./FlashDeals.css";
 
 /* =========================================================
    Config

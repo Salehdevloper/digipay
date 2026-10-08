@@ -1,0 +1,101 @@
+/* =========================================================
+   TermsPage.css
+   A centered white column (same width as the login page).
+========================================================= */
+
+.terms-page {
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  direction: rtl;
+  background: var(--color-bg, #f2f3f6);
+}
+
+.terms-page__column {
+  width: min(100%, 690px);
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: #fff;
+  border-inline: 1px solid rgba(20, 30, 60, 0.07);
+}
+
+/* back arrow stays on top while the text scrolls */
+.terms-page__bar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  height: 64px;
+  padding-inline: 16px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.terms-page__back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  color: #111;
+  background: none;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+.terms-page__back:hover {
+  background: #f2f3f6;
+}
+
+.terms-page__back svg {
+  width: 26px;
+  height: 26px;
+}
+
+.terms-page__body {
+  padding: 8px 28px 64px;
+  color: #1f2937;
+  font-family: var(--font-main), sans-serif;
+  font-weight: var(--font-weight-text, 400);
+}
+
+.terms-page__title {
+  margin-bottom: 40px;
+  font-size: 15px;
+  font-weight: inherit;
+  line-height: 1.8;
+}
+
+.terms-page__section {
+  margin-bottom: 32px;
+}
+
+.terms-page__heading {
+  margin-bottom: 20px;
+  font-size: 15px;
+  font-weight: inherit;
+  line-height: 1.8;
+}
+
+.terms-page__text {
+  font-size: 15px;
+  line-height: 2.2;
+  text-align: justify;
+}
+
+.terms-page__text + .terms-page__text {
+  margin-top: 6px;
+}
+
+@media (max-width: 480px) {
+  .terms-page__body {
+    padding: 4px 20px 48px;
+  }
+
+  .terms-page__text {
+    font-size: 14px;
+  }
+}

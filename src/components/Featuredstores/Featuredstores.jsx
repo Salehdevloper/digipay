@@ -1,10 +1,25 @@
 import { useId, useRef } from "react";
+import { Link } from "react-router-dom";
 
 import { FiChevronLeft, FiCreditCard } from "react-icons/fi";
 
-import { useDragScroll } from "../../hooks/usedragscroll";
+import { useDragScroll } from "../../hooks/useDragScroll";
+import { resolveImage } from "../../utils/resolveImage";
 
-import "./Featuredstores.css";
+import "./FeaturedStores.css";
+
+/* =========================================================
+   Logos
+   Every logo lives in  src/assets/images/brands/  and its file name
+   is the store id:   id: "serge"  ->  brands/serge.svg
+   (webp / png / jpg / svg all work). No imports needed:
+   add the file, use the same id in the stores list, done.
+========================================================= */
+
+const BRAND_LOGOS = import.meta.glob(
+  "../../assets/images/brands/*.{webp,png,jpg,svg}",
+  { eager: true, import: "default" }
+);
 
 /** Round logo; shows the first letter while a store has no logo yet. */
 function StoreLogo({ name, logo }) {
@@ -23,7 +38,9 @@ function StoreLogo({ name, logo }) {
  * Props:
  *   title      section title
  *   subtitle   optional blue line under the title (with a card icon)
- *   stores     [{ id, name, logo?, href? }]
+ *   stores     [{ id, name, logo?, to?, href? }]
+ *              to = route inside the app (e.g. "/stores/bani-mod")
+ *              logo is optional: by default it is brands/<id>.*
  *   allHref    link of the "همه" button
  */
 function FeaturedStores({ title, subtitle, stores, allHref = "#" }) {
@@ -61,16 +78,35 @@ function FeaturedStores({ title, subtitle, stores, allHref = "#" }) {
         }`}
         {...handlers}
       >
-        {stores.map(({ id, name, logo, href = "#" }) => (
-          <li key={id}>
-            <a href={href} className="featured-stores__item">
+        {stores.map(({ id, name, logo, to, href = "#" }) => {
+          const item = (
+            <>
               <span className="featured-stores__logo">
-                <StoreLogo name={name} logo={logo} />
+                {/* an explicit `logo` wins; otherwise brands/<id>.* */}
+                <StoreLogo
+                  name={name}
+                  logo={logo ?? resolveImage(BRAND_LOGOS, id)}
+                />
               </span>
               <span className="featured-stores__name">{name}</span>
-            </a>
-          </li>
-        ))}
+            </>
+          );
+
+          return (
+            <li key={id}>
+              {/* `to` = page inside the app, `href` = plain link */}
+              {to ? (
+                <Link to={to} className="featured-stores__item">
+                  {item}
+                </Link>
+              ) : (
+                <a href={href} className="featured-stores__item">
+                  {item}
+                </a>
+              )}
+            </li>
+          );
+        })}
       </ul>
     </section>
   );

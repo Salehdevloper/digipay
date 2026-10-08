@@ -1,9 +1,9 @@
   import { useRef } from "react";
 
-  import { useDragScroll } from "../../hooks/usedragscroll";
-  import { resolveImage } from "../../utils/Resolveimage";
+  import { useDragScroll } from "../../hooks/useDragScroll";
+  import { resolveImage } from "../../utils/resolveImage";
 
-  import "./Storecategories.css";
+  import "./StoreCategories.css";
 
   /* =========================================================
     Images

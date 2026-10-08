@@ -1,0 +1,123 @@
+/* =========================================================
+   LoginPage.css  (چیدمان داخل هر مرحله)
+   Field / button / OTP styles: components/auth/AuthForm.css
+========================================================= */
+
+.login-page__step {
+  animation: login-step-enter 0.35s ease both;
+}
+
+@keyframes login-step-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* A step is a vertical stack */
+.login-step {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  font-family: var(--font-main), sans-serif;
+}
+
+.login-step__title {
+  color: var(--color-text-strong, #1f2937);
+  font-size: 20px;
+  font-weight: var(--font-weight-text, 400);
+  line-height: 1.6;
+  text-align: center;
+}
+
+.login-step__description {
+  margin-top: -10px;
+  color: #7b7e84;
+  font-size: 14px;
+  line-height: 1.8;
+  text-align: center;
+}
+
+/* small blue line: "کد معرف ... ثبت شد" */
+.login-step__note {
+  color: var(--color-primary, #1159fc);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* two links: referral on the right, terms on the left */
+.login-step__links {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 4px;
+}
+
+.login-step__links--center {
+  justify-content: center;
+}
+
+/* ----- SMS step ----- */
+
+.login-step__phone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.login-step__phone-number {
+  color: var(--color-text-strong, #1f2937);
+  font-size: 20px;
+  line-height: 1.6;
+}
+
+.login-step__edit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: var(--color-primary, #1159fc);
+  background: none;
+  border-radius: 8px;
+}
+
+.login-step__edit svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* reserved space under the code boxes */
+.login-step__error {
+  min-height: 22px;
+  margin-top: -6px;
+  color: var(--color-danger, #f9441f);
+  font-size: 13px;
+  line-height: 1.7;
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .login-step {
+    gap: 16px;
+  }
+
+  .login-step__title {
+    font-size: 18px;
+  }
+
+  .login-step__phone-number {
+    font-size: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login-page__step {
+    animation: none;
+  }
+}

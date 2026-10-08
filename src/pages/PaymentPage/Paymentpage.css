@@ -1,0 +1,31 @@
+.payment-page {
+  direction: rtl;
+  padding-bottom: var(--section-space, 80px);
+}
+
+.payment-page__container {
+  width: min(
+    100% - var(--container-gutter, 40px),
+    var(--container-width-wide, 1355px)
+  );
+  margin-inline: auto;
+  padding: 32px;
+  background: var(--color-surface, #fff);
+  border-radius: 28px;
+}
+
+.payment-page__title {
+  color: var(--color-text-strong, #1f2937);
+  font-family: var(--font-main), sans-serif;
+  font-size: 20px;
+  font-weight: var(--font-weight-text, 400);
+  line-height: 1.6;
+}
+
+.payment-page__text {
+  margin-top: 12px;
+  color: var(--color-text, #45474a);
+  font-family: var(--font-main), sans-serif;
+  font-size: 14px;
+  line-height: 2;
+}

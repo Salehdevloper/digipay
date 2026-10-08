@@ -1,6 +1,6 @@
 import { STORE_MODE_ITEMS } from "../../constants/storeModes";
 
-import "./Storestabs.css";
+import "./StoresTabs.css";
 
 /**
  * Segmented control: "فروشگاه‌های آنلاین | فروشگاه‌های حضوری".

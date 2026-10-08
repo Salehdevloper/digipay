@@ -1,0 +1,146 @@
+/* =========================================================
+   AuthStory.css  (هدر صفحه‌ی ورود: نوار پیشرفت + عنوان + تصویر)
+========================================================= */
+
+.auth-story {
+  padding: 20px 24px 0;
+  color: #fff;
+  text-align: center;
+}
+
+/* ----- Progress bars (RTL: the first one is on the right) ----- */
+
+.auth-story__progress {
+  display: flex;
+  gap: 5px;
+}
+
+.auth-story__segment {
+  position: relative;
+  flex: 1;
+  height: 6px;
+  padding: 0;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* bigger invisible touch target */
+.auth-story__segment::after {
+  content: "";
+  position: absolute;
+  inset: -10px 0;
+}
+
+.auth-story__fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 4px;
+  transform: scaleX(0);
+  transform-origin: right; /* fills from right to left */
+}
+
+.auth-story__fill--done {
+  transform: scaleX(1);
+}
+
+.auth-story__fill--active {
+  animation-name: auth-story-fill;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes auth-story-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ----- Slide content ----- */
+
+.auth-story__content {
+  margin-top: 32px;
+  animation: auth-story-enter 0.5s ease both;
+}
+
+@keyframes auth-story-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.auth-story__title {
+  font-family: var(--font-main), sans-serif;
+  font-size: 22px;
+  font-weight: var(--font-weight-text, bold);
+  line-height: 1.6;
+}
+
+.auth-story__description {
+  max-width: 360px;
+  margin: 10px auto 0;
+  font-family: var(--font-main), sans-serif;
+  font-size: 14px;
+  font-weight: var(--font-weight-text, 300);
+  line-height: 1.9;
+  opacity: 0.8;
+}
+
+.auth-story__image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 220px;
+  margin-top: 14px;
+}
+
+.auth-story__image img {
+  width: auto;
+  max-width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+@media (max-width: 480px) {
+  .auth-story {
+    padding: 16px 20px 0;
+  }
+
+  .auth-story__content {
+    margin-top: 24px;
+  }
+
+  .auth-story__title {
+    font-size: 20px;
+  }
+
+  .auth-story__description {
+    font-size: 13px;
+  }
+
+  .auth-story__image {
+    height: 190px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-story__fill--active {
+    animation: none;
+    transform: scaleX(1);
+  }
+
+  .auth-story__content {
+    animation: none;
+  }
+}

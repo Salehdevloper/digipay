@@ -262,7 +262,8 @@
 .discount-modal__overlay {
   position: fixed;
   inset: 0;
-  z-index: 1000;
+  /* must sit above the fixed mobile bottom nav (and the header) */
+  z-index: 100000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -561,7 +562,7 @@
     gap: 16px;
     width: 100%;
     max-height: 92dvh;
-    padding: 20px 16px;
+    padding: 20px 16px calc(20px + env(safe-area-inset-bottom, 0px));
     border-radius: 28px 28px 0 0;
   }
 

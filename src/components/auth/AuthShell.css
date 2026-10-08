@@ -1,0 +1,72 @@
+/* =========================================================
+   AuthShell.css  (قاب صفحه‌ی ورود)
+   Colors animate smoothly between slides (registered properties).
+========================================================= */
+
+@property --auth-from {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #7886dd;
+}
+
+@property --auth-to {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #5568c8;
+}
+
+.auth-shell {
+  --auth-from: #7886dd;
+  --auth-to: #5568c8;
+
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  direction: rtl;
+  background: var(--color-bg, #f2f3f6);
+  transition:
+    --auth-from 0.6s ease,
+    --auth-to 0.6s ease;
+}
+
+/* The column: colored on top, fading into the page color below */
+.auth-shell__column {
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 690px);
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: linear-gradient(
+    180deg,
+    var(--auth-from) 0,
+    var(--auth-to) 560px,
+    var(--color-bg, #f2f3f6) 780px
+  );
+  border-inline: 1px solid rgba(20, 30, 60, 0.07);
+}
+
+/* The white card that holds the form */
+.auth-shell__sheet {
+  position: relative;
+  margin: 8px 24px 48px;
+  padding: 28px 24px 24px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.42) 0%,
+    rgba(250, 250, 251, 0.96) 55%,
+    #fafafa 100%
+  );
+  border-radius: 28px;
+  box-shadow: 0 24px 60px rgba(30, 40, 90, 0.16);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+@media (max-width: 480px) {
+  .auth-shell__sheet {
+    margin: 4px 16px 32px;
+    padding: 24px 18px 20px;
+    border-radius: 24px;
+  }
+}

@@ -11,7 +11,9 @@ import {
   FiX,
 } from "react-icons/fi";
 
-import "./Discountcodes.css";
+import { DISCOUNT_CODES } from "../../data/discountCodes";
+
+import "./DiscountCodes.css";
 
 /* =========================================================
    Config
@@ -51,57 +53,6 @@ const toPersianDigits = (value) =>
 
 const formatAmount = (millions) =>
   `${toPersianDigits(millions)} میلیون`;
-
-/* =========================================================
-   Codes (edit here)
-
-   storeId     -> file name of the logo in assets/images/brands
-   amount      -> discount in million toman
-   minPurchase -> minimum cart in million toman (optional)
-========================================================= */
-
-const CODES = [
-  {
-    id: 1,
-    store: "بانی مد",
-    storeId: "bani-mod",
-    amount: 2,
-    minPurchase: 10,
-    expiry: "۳۰ مهر ۱۴۰۵",
-    code: "DEHOTB",
-    url: "#",
-  },
-  {
-    id: 2,
-    store: "پوزیترون",
-    storeId: "positron",
-    amount: 5,
-    minPurchase: 20,
-    expiry: "۳۰ مهر ۱۴۰۵",
-    code: "CEPOYD",
-    url: "#",
-  },
-  {
-    id: 3,
-    store: "مثبت سبز",
-    storeId: "mosbat-sabz",
-    amount: 2,
-    minPurchase: 5,
-    expiry: "۳۰ مهر ۱۴۰۵",
-    code: "DERTMO",
-    url: "#",
-  },
-  {
-    id: 4,
-    store: "گوشی شاپ",
-    storeId: "goshi-shop",
-    amount: 3,
-    minPurchase: 15,
-    expiry: "۳۰ مهر ۱۴۰۵",
-    code: "DEGSOH",
-    url: "#",
-  },
-];
 
 const getSteps = (store) => [
   "کالای مورد نظر رو انتخاب کن",
@@ -421,10 +372,20 @@ function useDragScroll() {
    Discount Codes section
 ========================================================= */
 
-function DiscountCodes() {
+/**
+ * Props:
+ *   codes        list of codes to show (default: all, from data/discountCodes.js)
+ *   showAllLink  show the "همه" link next to the title
+ *
+ * With no codes the whole section is hidden.
+ */
+function DiscountCodes({ codes = DISCOUNT_CODES, showAllLink = true }) {
   const [activeDeal, setActiveDeal] = useState(null);
   const { ref, isDragging, handlers } = useDragScroll();
   const closeModal = useCallback(() => setActiveDeal(null), []);
+
+  // after the hooks (hooks must always run), before any markup
+  if (codes.length === 0) return null;
 
   return (
     <section className="discount-codes" dir="rtl">
@@ -432,10 +393,12 @@ function DiscountCodes() {
         <header className="discount-codes__header">
           <h2 className="discount-codes__heading">کد تخفیف</h2>
 
-          <a href="#" className="discount-codes__all">
-            همه
-            <FiChevronLeft aria-hidden="true" />
-          </a>
+          {showAllLink && (
+            <a href="#" className="discount-codes__all">
+              همه
+              <FiChevronLeft aria-hidden="true" />
+            </a>
+          )}
         </header>
 
         <div
@@ -446,7 +409,7 @@ function DiscountCodes() {
           {...handlers}
         >
           <ul className="discount-codes__track">
-            {CODES.map((deal) => (
+            {codes.map((deal) => (
               <CodeCard key={deal.id} deal={deal} onOpen={setActiveDeal} />
             ))}
           </ul>

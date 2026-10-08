@@ -1,6 +1,6 @@
 import { FiChevronLeft } from "react-icons/fi";
 
-import "./Instorehero.css";
+import "./InStoreHero.css";
 
 /* =========================================================
    Pin: white bubble with a shopping bag.

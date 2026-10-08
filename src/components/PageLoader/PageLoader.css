@@ -1,0 +1,43 @@
+.page-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: #fff;
+}
+
+/* ring with a fading tail */
+.page-loader__spinner {
+  width: 40px;
+  height: 40px;
+  background: conic-gradient(
+    from 0deg,
+    rgba(17, 89, 252, 0) 0%,
+    var(--color-primary, #1159fc) 100%
+  );
+  border-radius: 50%;
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 4px),
+    #000 calc(100% - 3px)
+  );
+  mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 4px),
+    #000 calc(100% - 3px)
+  );
+  animation: page-loader-spin 0.9s linear infinite;
+}
+
+@keyframes page-loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-loader__spinner {
+    animation-duration: 2.4s;
+  }
+}
