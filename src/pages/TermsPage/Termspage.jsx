@@ -4,7 +4,7 @@ import { FiArrowRight } from "react-icons/fi";
 import { TERMS_SECTIONS, TERMS_TITLE } from "../../constants/termsContent";
 import { usePageTitle } from "../../hooks/usePageTitle";
 
-import "./Termspage.css";
+import "./TermsPage.css";
 
 /** Terms of use (/terms): a long page that simply scrolls. */
 function TermsPage() {
