@@ -21,7 +21,7 @@ const StoresPage = lazy(() => import("./pages/StoresPage/StoresPage"));
 const StoreDetailPage = lazy(() => import("./pages/StoreDetailPage/StoreDetailPage"));
 const PaymentPage = lazy(() => import("./pages/PaymentPage/PaymentPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage"));
-const TermsPage = lazy(() => import("./pages/TermsPage/TermsPage"));
+const TermsPage = lazy(() => import("./pages/Termspage/Termspage"));
 
 /** Every page change starts from the top of the page. */
 function ScrollToTop() {
