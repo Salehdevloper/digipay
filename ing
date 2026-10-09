@@ -1,0 +1,18 @@
+[35msrc/App.jsx[m[36m:[m[32m19[m[36m:[mconst [1;31mHomePage[m = lazy(() => import("./pages/[1;31mHomePage[m/[1;31mHomePage[m"));
+[35msrc/App.jsx[m[36m:[m[32m20[m[36m:[mconst [1;31mStoresPage[m = lazy(() => import("./pages/[1;31mStoresPage[m/[1;31mStoresPage[m"));
+[35msrc/App.jsx[m[36m:[m[32m22[m[36m:[mconst [1;31mPaymentPage[m = lazy(() => import("./pages/[1;31mPaymentPage[m/[1;31mPaymentPage[m"));
+[35msrc/App.jsx[m[36m:[m[32m47[m[36m:[m              <Route path="/" element={<[1;31mHomePage[m />} />
+[35msrc/App.jsx[m[36m:[m[32m48[m[36m:[m              <Route path="/stores" element={<[1;31mStoresPage[m />} />
+[35msrc/App.jsx[m[36m:[m[32m53[m[36m:[m                <Route path="/payment" element={<[1;31mPaymentPage[m />} />
+[35msrc/components/Header/Header.jsx[m[36m:[m[32m450[m[36m:[m  const is[1;31mStoresPage[m = pathname.startsWith("/stores");
+[35msrc/components/Header/Header.jsx[m[36m:[m[32m578[m[36m:[m                    {id === "stores" && is[1;31mStoresPage[m && (
+[35msrc/pages/HomePage/HomePage.jsx[m[36m:[m[32m8[m[36m:[mfunction [1;31mHomePage[m() {
+[35msrc/pages/HomePage/HomePage.jsx[m[36m:[m[32m21[m[36m:[mexport default [1;31mHomePage[m;
+[35msrc/pages/PaymentPage/PaymentPage.jsx[m[36m:[m[32m5[m[36m:[mimport "./[1;31mPaymentPage[m.css";
+[35msrc/pages/PaymentPage/PaymentPage.jsx[m[36m:[m[32m11[m[36m:[mfunction [1;31mPaymentPage[m() {
+[35msrc/pages/PaymentPage/PaymentPage.jsx[m[36m:[m[32m31[m[36m:[mexport default [1;31mPaymentPage[m;
+[35msrc/pages/StoresPage/StoresPage.css[m[36m:[m[32m2[m[36m:[m   [1;31mStoresPage[m.css
+[35msrc/pages/StoresPage/StoresPage.jsx[m[36m:[m[32m13[m[36m:[mimport "./[1;31mStoresPage[m.css";
+[35msrc/pages/StoresPage/StoresPage.jsx[m[36m:[m[32m111[m[36m:[mfunction [1;31mStoresPage[m() {
+[35msrc/pages/StoresPage/StoresPage.jsx[m[36m:[m[32m142[m[36m:[mexport default [1;31mStoresPage[m;
+[35msrc/routes/ProtectedRoute.jsx[m[36m:[m[32m8[m[36m:[m *     <Route path="/payment" element={<[1;31mPaymentPage[m />} />
