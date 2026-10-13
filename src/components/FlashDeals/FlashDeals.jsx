@@ -1,13 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { FiShoppingBag } from "react-icons/fi";
 
-import vitaminD3 from "../../assets/images/Flashdeals/vitaminD3.webp";
-import hoodi from "../../assets/images/Flashdeals/hoodi.webp";
-import mashinEslah from "../../assets/images/Flashdeals/mashin-eslah.webp";
-import shemshTala from "../../assets/images/Flashdeals/shemsh-tala.webp";
-import saatMochi from "../../assets/images/Flashdeals/saat-mochi.webp";
-import laptop from "../../assets/images/Flashdeals/laptop.webp";
-import topBlue from "../../assets/images/Flashdeals/top-blue.webp";
+import { getFlashDealProducts } from "../../data/products";
+import { getStoreById } from "../../data/stores";
+import { getProductImage } from "../../utils/productImages";
+import { resolveImage } from "../../utils/resolveImage";
 
 import "./FlashDeals.css";
 
@@ -19,6 +16,7 @@ const DRAG_THRESHOLD = 5; // px before a press counts as a drag
 
 /* =========================================================
    Store Logos
+   assets/images/brands/<storeId>.svg|webp|png|jpg
 ========================================================= */
 
 const STORE_LOGOS = import.meta.glob(
@@ -44,114 +42,23 @@ const formatPrice = (price) =>
     Number(price).toLocaleString("en-US")
   );
 
-const getStoreLogo = (storeId) => {
-  const entry = Object.entries(STORE_LOGOS).find(
-    ([path]) => {
-      const fileName = path.split("/").pop();
-
-      const nameWithoutExtension =
-        fileName.substring(
-          0,
-          fileName.lastIndexOf(".")
-        );
-
-      return nameWithoutExtension === storeId;
-    }
-  );
-
-  return entry ? entry[1] : null;
-};
+const getStoreLogo = (storeId) => resolveImage(STORE_LOGOS, storeId);
 
 /* =========================================================
    Deals
+   No list here: every product with  flashDeal: true
+   in data/products.js is shown in this section.
+   The photo is found by store folder + product id:
+   assets/images/products/<store id>/<product id>.*
 ========================================================= */
 
-const DEALS = [
-  {
-    id: 1,
-    title: "قرص ویتامین D3 ۲۰۰۰ واحد ۹۰ عدد",
-    store: "مثبت سبز",
-    storeId: "mosbat-sabz",
-    rating: 4.6,
-    installments: 4,
-    price: 144300,
-    oldPrice: 267300,
-    image: vitaminD3,
-    href: "#",
-  },
-  {
-    id: 2,
-    title: "هودی زنانه مدل رنگ سرخابی",
-    store: "بانی مد",
-    storeId: "bani-mod",
-    rating: 4.6,
-    installments: 4,
-    price: 4130000,
-    oldPrice: 5900000,
-    image: hoodi,
-    href: "#",
-  },
-  {
-    id: 3,
-    title: "ماشین اصلاح موی سر و صورت شارژی وی جی آر",
-    store: "پوزیترون",
-    storeId: "positron",
-    rating: 4.4,
-    installments: 4,
-    price: 5764000,
-    oldPrice: 7205000,
-    image: mashinEslah,
-    href: "#",
-  },
-  {
-    id: 4,
-    title: "شمش طلا ۱۸ عیار ۱ گرمی وتوسو مدل ملکه ۱۴۰۳",
-    store: "گوشی شاپ",
-    storeId: "goshi-shop",
-    rating: 4.5,
-    installments: 4,
-    price: 29500000,
-    oldPrice: 29900000,
-    image: shemshTala,
-    href: "#",
-  },
-  {
-    id: 5,
-    title: "ساعت مچی مردانه کاندینو مدل C4744/4",
-    store: "تی تی بول",
-    storeId: "titi-bol",
-    rating: 4.3,
-    installments: 4,
-    price: 75905000,
-    oldPrice: 89300000,
-    image: saatMochi,
-    href: "#",
-  },
-  {
-    id: 6,
-    title: "لپ تاپ ایسوس ۱۵.۶ اینچی مدل VivoBook 15",
-    store: "پلازا دیجیتال",
-    storeId: "pelaza",
-    rating: 4.1,
-    installments: 4,
-    price: 171999000,
-    oldPrice: 179999000,
-    image: laptop,
-    href: "#",
-  },
-  {
-    id: 7,
-    title: "تاپ ابریشم طرح دار آبی",
-    store: "آستین",
-    storeId: "astin",
-    rating: 4.2,
-    installments: 4,
-    price: 1250000,
-    oldPrice: 1790000,
-    image: topBlue,
-    href: "#",
-  },
-];
+const DEALS = getFlashDealProducts().map((product) => ({
+  ...product,
+  store: getStoreById(product.storeId)?.name ?? "",
+  image: getProductImage(product.id, product.storeId),
+  installments: product.installments ?? 4,
+  href: product.href ?? "#",
+}));
 
 /* =========================================================
    Countdown
@@ -266,13 +173,15 @@ function DealCard({ deal }) {
         ========================== */}
 
         <div className="flash-deals__media">
-          <img
-            className="flash-deals__image"
-            src={image}
-            alt=""
-            loading="lazy"
-            draggable={false}
-          />
+          {image && (
+            <img
+              className="flash-deals__image"
+              src={image}
+              alt=""
+              loading="lazy"
+              draggable={false}
+            />
+          )}
 
           {/* Store Logo + Rating */}
 
@@ -288,11 +197,13 @@ function DealCard({ deal }) {
               <FiShoppingBag aria-hidden="true" />
             )}
 
-            <span className="flash-deals__rating">
-              {toPersianDigits(
-                rating.toFixed(1)
-              )}
-            </span>
+            {rating && (
+              <span className="flash-deals__rating">
+                {toPersianDigits(
+                  rating.toFixed(1)
+                )}
+              </span>
+            )}
           </span>
 
           {/* Bottom Overlay */}
@@ -354,7 +265,7 @@ function DealCard({ deal }) {
               )}
 
               <span className="flash-deals__old-price">
-                {formatPrice(oldPrice)}
+                {oldPrice ? formatPrice(oldPrice) : ""}
               </span>
             </div>
 
@@ -461,6 +372,9 @@ function DealsSlider() {
 ========================================================= */
 
 function FlashDeals() {
+  // no product has flashDeal: true -> the whole section is hidden
+  if (DEALS.length === 0) return null;
+
   return (
     <section
       className="flash-deals"

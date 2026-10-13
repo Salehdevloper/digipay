@@ -9,7 +9,6 @@
 
 .stores-page {
   direction: rtl;
-  padding-bottom: var(--section-space, 80px);
 }
 
 .stores-page__container {
@@ -19,6 +18,8 @@
     var(--container-width-wide, 1355px)
   );
   margin-inline: auto;
+  /* space before the page sections below (and the page end) */
+  padding-bottom: var(--section-space, 80px);
 }
 
 /* =========================

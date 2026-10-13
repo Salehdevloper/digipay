@@ -13,7 +13,7 @@ import {
 
 import { DISCOUNT_CODES } from "../../data/discountCodes";
 
-import "./DiscountCodes.css";
+import "./Discountcodes.css";
 
 /* =========================================================
    Config
@@ -422,5 +422,8 @@ function DiscountCodes({ codes = DISCOUNT_CODES, showAllLink = true }) {
     </section>
   );
 }
+
+// the modal is also used by the "کد تخفیف" card inside product sliders
+export { CodeModal };
 
 export default DiscountCodes;

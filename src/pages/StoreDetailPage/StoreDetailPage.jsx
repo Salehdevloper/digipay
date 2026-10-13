@@ -1,10 +1,16 @@
 import { Link, useParams } from "react-router-dom";
 
-import DiscountCodes from "../../components/DiscountCodes/DiscountCodes";
+import DiscountCodes from "../../components/DiscountCodes/Discountcodes";
+import ProductSection from "../../components/ProductSection/ProductSection";
 import StoreProfile from "../../components/StoreProfile/StoreProfile";
 
-import { getCodesByStore } from "../../data/discountCodes";
+import { getBestSellerCodes, getCodesByStore } from "../../data/discountCodes";
 import { getStoreById } from "../../data/stores";
+import {
+  getSectionProducts,
+  getSectionTitle,
+  getStoreSections,
+} from "../../data/storeSections";
 import { usePageTitle } from "../../hooks/usePageTitle";
 
 import "./StoreDetailPage.css";
@@ -40,6 +46,7 @@ function StoreDetailPage() {
   }
 
   const codes = getCodesByStore(store.id);
+  const sections = getStoreSections(store.id);
 
   return (
     <div className="store-detail">
@@ -49,6 +56,20 @@ function StoreDetailPage() {
 
       {/* renders nothing when `codes` is empty */}
       <DiscountCodes codes={codes} showAllLink={false} />
+
+      {/* product rows of this store (data/storeSections.js).
+          The "best sellers" row also gets this store's codes that have
+          inBestSellers: true (data/discountCodes.js) as first cards. */}
+      {sections.map((section) => (
+        <ProductSection
+          key={section.id}
+          title={getSectionTitle(section, store)}
+          products={getSectionProducts(store.id, section)}
+          discountCodes={
+            section.filter === "bestSeller" ? getBestSellerCodes("store", store.id) : []
+          }
+        />
+      ))}
     </div>
   );
 }

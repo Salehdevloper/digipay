@@ -1,7 +1,6 @@
 import Hero from "../../components/Hero/Hero";
+import PageSections from "../../components/PageSections/PageSections";
 import Services from "../../components/Services/Services";
-import FlashDeals from "../../components/FlashDeals/FlashDeals";
-import DiscountCodes from "../../components/DiscountCodes/DiscountCodes";
 
 import { usePageTitle } from "../../hooks/usePageTitle";
 
@@ -12,8 +11,10 @@ function HomePage() {
     <>
       <Hero />
       <Services />
-      <FlashDeals />
-      <DiscountCodes />
+
+      {/* قسطی شگفت / کد تخفیف / پرفروش‌ترین‌ها:
+          turn each on or off in config/pageSections.js */}
+      <PageSections page="home" />
     </>
   );
 }

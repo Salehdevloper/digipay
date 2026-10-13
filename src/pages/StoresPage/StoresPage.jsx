@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import BannerSlider from "../../components/BannerSlider/BannerSlider";
 import FeaturedStores from "../../components/FeaturedStores/FeaturedStores";
 import InStoreHero from "../../components/InStoreHero/InStoreHero";
+import PageSections from "../../components/PageSections/PageSections";
 import StoreCategories from "../../components/StoreCategories/StoreCategories";
 import StoresTabs from "../../components/StoresTabs/StoresTabs";
 
@@ -33,9 +34,9 @@ const BANNER_IMAGES = import.meta.glob(
 /** Online tab slider: `image` = file name inside stores/banners/ */
 const ONLINE_BANNERS = [
   { id: "instagram", image: "online-instagram", alt: "فروش قسطی در اینستاگرام" },
-  { id: "villa", image: "online-villa", alt: "اجاره ویلا و کلبه با اعتبار دیجی‌پی" },
-  { id: "gold", image: "online-gold", alt: "هرخرید یک شانس برای بردن طلای دیجیتال" },
-  { id: "digicard", image: "online-digicard", alt: "دیجی‌کارت" },
+  { id: "ejare-villa", image: "ejare-villa", alt: "اجاره ویلا و کلبه با اعتبار دیجی‌پی" },
+  { id: "goshi-shop", image: "goshi-shop", alt: "دو ملیون تخفیف از گوشی شاپ"},
+  { id: "saat-paiz", image: "saat-paiz", alt: "ساعت پاییزی با اعتبار دیجی" },
 ].map((banner) => ({
   ...banner,
   image: resolveImage(BANNER_IMAGES, banner.image),
@@ -135,6 +136,11 @@ function StoresPage() {
           {mode === "offline" ? <InStoreStores /> : <OnlineStores />}
         </div>
       </div>
+
+      {/* Online tab, after "فروشگاه‌های منتخب": قسطی شگفت / کد تخفیف /
+          پرفروش‌ترین‌ها. Switch each one in config/pageSections.js (key "stores").
+          They have their own width, so they live outside the container above. */}
+      {mode === "online" && <PageSections page="stores" />}
     </div>
   );
 }

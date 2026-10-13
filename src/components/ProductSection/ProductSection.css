@@ -1,0 +1,245 @@
+/* =========================================================
+   ProductSection.css
+
+   1. Section & header   2. Slider   3. Discount code card   4. Mobile
+========================================================= */
+
+/* =========================
+   1. Section & header
+========================== */
+
+.product-section {
+  --product-card-width: 194px;
+  --product-gap: 16px;
+
+  direction: rtl;
+  padding-bottom: var(--section-space, 80px);
+}
+
+.product-section__container {
+  width: min(
+    100% - var(--container-gutter, 40px),
+    var(--container-width-wide, 1355px)
+  );
+  margin-inline: auto;
+}
+
+.product-section__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.product-section__title {
+  color: var(--color-text-strong, #1f2937);
+  font-family: var(--font-main), sans-serif;
+  font-size: 18px;
+  font-weight: var(--font-weight-text, 400);
+  line-height: 1.6;
+}
+
+.product-section__all {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-primary, #1159fc);
+  font-family: var(--font-main), sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+}
+
+.product-section__all svg {
+  width: 20px;
+  height: 20px;
+}
+
+.product-section__all:hover {
+  opacity: 0.75;
+}
+
+/* =========================
+   2. Slider
+   Native scroll + mouse drag. The last card is cut at the edge,
+   so people see that there is more.
+========================== */
+
+.product-section__list {
+  display: flex;
+  align-items: stretch;
+  gap: var(--product-gap);
+  padding-block: 4px 12px; /* room for the hover lift and the shadow */
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-snap-type: x proximity;
+  cursor: grab;
+}
+
+.product-section__list::-webkit-scrollbar {
+  display: none;
+}
+
+.product-section__list--dragging {
+  scroll-snap-type: none;
+  cursor: grabbing;
+  user-select: none;
+}
+
+.product-section__item {
+  display: flex;
+  flex: 0 0 var(--product-card-width);
+  scroll-snap-align: start;
+}
+
+/* =========================
+   3. Discount code card
+========================== */
+
+.code-card {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 24px 14px;
+  text-align: center;
+  background: var(--color-surface, #fff);
+  border-radius: 28px;
+  font-family: var(--font-main), sans-serif;
+  font-weight: var(--font-weight-text, 400);
+}
+
+.code-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 68px;
+  color: #fff;
+  background: linear-gradient(135deg, #5b8cff 0%, #2a5bff 100%);
+  border-radius: 20px;
+  transform: rotate(-8deg);
+}
+
+.code-card__icon svg {
+  width: 34px;
+  height: 34px;
+}
+
+.code-card__title {
+  color: var(--color-text-strong, #1f2937);
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* dashed "tear-off" line with two notches */
+.code-card__divider {
+  position: relative;
+  width: calc(100% + 28px);
+  height: 0;
+  border-top: 2px dashed #e1e4ec;
+}
+
+.code-card__divider::before,
+.code-card__divider::after {
+  content: "";
+  position: absolute;
+  top: -11px;
+  width: 20px;
+  height: 20px;
+  background: var(--color-bg, #f2f3f6);
+  border-radius: 50%;
+}
+
+.code-card__divider::before {
+  right: -10px;
+}
+
+.code-card__divider::after {
+  left: -10px;
+}
+
+.code-card__code {
+  color: #111;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+}
+
+.code-card__button {
+  padding: 8px 26px;
+  color: var(--color-primary, #1159fc);
+  font-family: inherit;
+  font-size: 14px;
+  background: #e8edf8;
+  border-radius: 20px;
+  transition: background-color 0.2s ease;
+}
+
+.code-card__button:hover {
+  background: #dde5f5;
+}
+
+/* =========================
+   4. Mobile
+========================== */
+
+@media (max-width: 1000px) {
+  .product-section {
+    --product-card-width: 150px;
+    --product-gap: 10px;
+  }
+
+  .product-section__header {
+    margin-bottom: 16px;
+  }
+
+  .product-section__title {
+    font-size: 17px;
+  }
+
+  .code-card {
+    padding: 18px 10px;
+    gap: 10px;
+    border-radius: 22px;
+  }
+
+  .code-card__icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 17px;
+  }
+
+  .code-card__icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .code-card__title {
+    font-size: 13px;
+  }
+
+  .code-card__divider {
+    width: calc(100% + 20px);
+  }
+
+  .code-card__code {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-section {
+    --product-card-width: 142px;
+  }
+}
+
+@media (max-width: 360px) {
+  .product-section {
+    --product-card-width: 134px;
+  }
+}
