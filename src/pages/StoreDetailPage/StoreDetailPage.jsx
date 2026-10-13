@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 
-import DiscountCodes from "../../components/DiscountCodes/Discountcodes";
+import DiscountCodes from "../../components/DiscountCodes/DiscountCodes";
 import ProductSection from "../../components/ProductSection/ProductSection";
 import StoreProfile from "../../components/StoreProfile/StoreProfile";
 

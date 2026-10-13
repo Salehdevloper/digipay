@@ -13,7 +13,7 @@ import {
 
 import { DISCOUNT_CODES } from "../../data/discountCodes";
 
-import "./Discountcodes.css";
+import "./DiscountCodes.css";
 
 /* =========================================================
    Config
