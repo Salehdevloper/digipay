@@ -1,0 +1,171 @@
+/* =========================================================
+   StoreListItem.css  (یک ردیف از لیست فروشگاه‌ها)
+========================================================= */
+
+.store-item {
+  border-bottom: 1px solid #eceef3;
+}
+
+.store-item:last-child {
+  border-bottom: 0;
+}
+
+.store-item__link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 0;
+  direction: rtl;
+  font-family: var(--font-main), sans-serif;
+  font-weight: var(--font-weight-text, 400);
+}
+
+/* ----- logo + red discount badge ----- */
+
+.store-item__logo-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.store-item__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  overflow: hidden;
+  color: #6a35c9;
+  background: var(--color-bg, #f2f3f6);
+  border-radius: 16px;
+}
+
+.store-item__logo img {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+}
+
+.store-item__logo svg {
+  width: 24px;
+  height: 24px;
+}
+
+.store-item__badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  color: #fff;
+  background: var(--color-danger, #f9441f);
+  border: 2px solid #fff;
+  border-radius: 50%;
+}
+
+.store-item__badge svg {
+  width: 11px;
+  height: 11px;
+  stroke-width: 3;
+}
+
+/* ----- name ----- */
+
+.store-item__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.store-item__name {
+  color: var(--color-text-strong, #1f2937);
+  font-size: 17px;
+  font-weight: inherit;
+  line-height: 1.6;
+}
+
+.store-item__tagline {
+  color: #8a8d94;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ----- left side: cashback chip + arrow ----- */
+
+.store-item__cashback {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-inline-start: auto; /* pushes this and the arrow to the left */
+  padding: 4px 10px;
+  color: var(--color-primary, #1159fc);
+  font-size: 12px;
+  background: #e8f0ff;
+  border-radius: 14px;
+}
+
+.store-item__cashback svg {
+  width: 14px;
+  height: 14px;
+}
+
+.store-item__arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  color: #111;
+  background: #eef0f6;
+  border-radius: 50%;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+/* no cashback chip: the arrow itself goes to the left */
+.store-item__info + .store-item__arrow {
+  margin-inline-start: auto;
+}
+
+.store-item__arrow svg {
+  width: 22px;
+  height: 22px;
+}
+
+@media (hover: hover) {
+  .store-item__link:hover .store-item__arrow {
+    background: #e1e5ef;
+    transform: translateX(-3px);
+  }
+}
+
+@media (max-width: 480px) {
+  .store-item__link {
+    gap: 12px;
+    padding: 16px 0;
+  }
+
+  .store-item__logo {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+  }
+
+  .store-item__name {
+    font-size: 15px;
+  }
+
+  .store-item__tagline {
+    font-size: 12px;
+  }
+
+  .store-item__arrow {
+    width: 38px;
+    height: 38px;
+  }
+}

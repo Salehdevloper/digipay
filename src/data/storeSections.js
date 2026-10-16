@@ -53,6 +53,16 @@ export const STORE_SECTIONS = {
       title: "پرفروش‌ترین‌های {store}",
       filter: "bestSeller",
     },
+    {
+      id: "flashdeal-bnimod",
+      title: "قسطی شگفت",
+      productIds: [
+        "rainy-women",
+        "woven-skirt",
+        "long-coat-women",
+        "puffer-men",
+      ]
+    }
   ],
 };
 

@@ -1,0 +1,268 @@
+/* =========================================================
+   StoreListPage.css
+
+   1. Container & title row
+   2. Layout (filter card + results)
+   3. Chips, count, list, empty state
+   4. Mobile (<= 1000px): filter button + full-screen sheet
+========================================================= */
+
+/* =========================
+   1. Container & title row
+========================== */
+
+.store-list {
+  direction: rtl;
+  padding-bottom: var(--section-space, 80px);
+  font-family: var(--font-main), sans-serif;
+  font-weight: var(--font-weight-text, 400);
+}
+
+.store-list__container {
+  width: min(
+    100% - var(--container-gutter, 40px),
+    var(--container-width-wide, 1355px)
+  );
+  margin-inline: auto;
+}
+
+.store-list__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.store-list__back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: #111;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+.store-list__back:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.store-list__back svg {
+  width: 26px;
+  height: 26px;
+}
+
+.store-list__title {
+  color: var(--color-text-strong, #1f2937);
+  font-size: 18px;
+  font-weight: inherit;
+  line-height: 1.6;
+}
+
+/* shown only on mobile (section 4) */
+.store-list__filter-button {
+  display: none;
+}
+
+/* =========================
+   2. Layout
+   RTL: the first column (filter card) is on the right.
+========================== */
+
+.store-list__layout {
+  display: grid;
+  grid-template-columns: 360px minmax(0, 1fr);
+  gap: 34px;
+  align-items: start;
+}
+
+.store-list__sidebar {
+  position: sticky;
+  top: 112px;
+  padding: 28px 30px;
+  background: var(--color-surface, #fff);
+  border-radius: 32px;
+}
+
+.store-list__results {
+  min-width: 0;
+  padding: 28px 30px;
+  background: var(--color-surface, #fff);
+  border-radius: 32px;
+}
+
+/* =========================
+   3. Chips, count, list
+========================== */
+
+.store-list__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.store-list__chip {
+  padding: 6px 16px;
+  color: var(--color-text, #45474a);
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.7;
+  background: #fff;
+  border: 1px solid #d9dce6;
+  border-radius: 20px;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.store-list__chip:hover {
+  border-color: #b9c3dd;
+}
+
+.store-list__chip--active {
+  color: var(--color-primary, #1159fc);
+  background: #eaf2ff;
+  border-color: var(--color-primary, #1159fc);
+}
+
+.store-list__count {
+  margin: 34px 0 6px;
+  color: #8a8d94;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.store-list__empty {
+  padding: 48px 0 24px;
+  color: #7b7e84;
+  font-size: 14px;
+  text-align: center;
+}
+
+.store-list__reset {
+  margin-top: 14px;
+  padding: 8px 22px;
+  color: var(--color-primary, #1159fc);
+  font-family: inherit;
+  font-size: 14px;
+  background: #e8edf8;
+  border-radius: 20px;
+}
+
+/* =========================
+   4. Mobile (<= 1000px)
+========================== */
+
+@media (max-width: 1000px) {
+  .store-list__container {
+    width: calc(100% - var(--container-gutter, 32px));
+  }
+
+  .store-list__header {
+    margin-bottom: 18px;
+  }
+
+  .store-list__filter-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-inline-start: auto; /* to the left */
+    padding: 8px 16px;
+    color: var(--color-text-strong, #1f2937);
+    font-family: inherit;
+    font-size: 14px;
+    background: var(--color-surface, #fff);
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(28, 47, 75, 0.06);
+  }
+
+  .store-list__filter-button svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .store-list__filter-count {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 5px;
+    color: #fff;
+    font-size: 11px;
+    line-height: 1;
+    background: var(--color-primary, #1159fc);
+    border-radius: 10px;
+  }
+
+  /* the card moves into the sheet */
+  .store-list__layout {
+    display: block;
+  }
+
+  .store-list__sidebar {
+    display: none;
+  }
+
+  .store-list__results {
+    padding: 20px 18px;
+    border-radius: 28px;
+  }
+
+  /* chips scroll sideways instead of wrapping */
+  .store-list__chips {
+    flex-wrap: nowrap;
+    padding-bottom: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .store-list__chips::-webkit-scrollbar {
+    display: none;
+  }
+
+  .store-list__chip {
+    white-space: nowrap;
+  }
+
+  .store-list__count {
+    margin-top: 22px;
+  }
+
+  /* ----- full-screen filter sheet ----- */
+
+  .store-list__sheet {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-mobile-menu, 5000);
+    padding: 20px 16px 28px;
+    overflow-y: auto;
+    background: var(--color-bg, #f2f3f6);
+    animation: store-list-sheet 0.28s ease both;
+  }
+
+  .store-list__sheet-card {
+    padding: 24px 22px;
+    background: var(--color-surface, #fff);
+    border-radius: 28px;
+  }
+}
+
+@keyframes store-list-sheet {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .store-list__sheet {
+    animation: none;
+  }
+}

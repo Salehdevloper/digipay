@@ -4,6 +4,8 @@
  *   flashDeals    «قسطی شگفت»          products with flashDeal: true
  *   discountCodes «کد تخفیف»           the slider with ALL codes
  *   bestSellers   «پرفروش‌ترین‌های <فروشگاه>»  one row per store
+ *   partnerPromos rows from data/partnerPromos.js (e.g. «تخفیف‌های تکرار نشدنی»
+ *                 در تپسی‌شاپ). Each row also says on which pages it shows.
  *                 (products with bestSeller + codes with inBestSellers
  *                  that are switched on for this page, see utils/flags.js)
  *
@@ -22,6 +24,7 @@ export const PAGE_SECTIONS = {
     flashDeals: true,
     discountCodes: true,
     bestSellers: true,
+    partnerPromos: true,
   },
 
   // «فروشگاه‌ها» page, online tab, after «فروشگاه‌های منتخب»
@@ -29,5 +32,6 @@ export const PAGE_SECTIONS = {
     flashDeals: true,
     discountCodes: true,
     bestSellers: true,
+    partnerPromos: true,
   },
 };

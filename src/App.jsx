@@ -18,6 +18,7 @@ import "./styles/responsive.css";
    While it loads, <PageLoader /> (the blue spinner) is shown. */
 const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
 const StoresPage = lazy(() => import("./pages/StoresPage/StoresPage"));
+const StoreListPage = lazy(() => import("./pages/StoreListPage/StoreListPage"));
 const StoreDetailPage = lazy(() => import("./pages/StoreDetailPage/StoreDetailPage"));
 const PaymentPage = lazy(() => import("./pages/PaymentPage/PaymentPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage"));
@@ -25,7 +26,7 @@ const TermsPage = lazy(() => import("./pages/TermsPage/TermsPage"));
 
 /** Every page change starts from the top of the page. */
 function ScrollToTop() {
-  const { pathname } = useLocation(); 
+  const { pathname } = useLocation();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -46,6 +47,7 @@ function App() {
             <Route element={<MainLayout />}>
               <Route path="/" element={<HomePage />} />
               <Route path="/stores" element={<StoresPage />} />
+              <Route path="/stores/category/:categoryId" element={<StoreListPage />} />
               <Route path="/stores/:storeId" element={<StoreDetailPage />} />
 
               {/* Needs a login: guests are sent to /login first */}

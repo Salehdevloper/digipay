@@ -1,0 +1,116 @@
+/* =========================================================
+   StoreFilters.css  (پنل فیلتر)
+   Used twice: as a card in the sidebar (desktop) and inside the
+   full-screen sheet (mobile). The card itself comes from the page.
+========================================================= */
+
+.store-filters {
+  direction: rtl;
+  font-family: var(--font-main), sans-serif;
+  font-weight: var(--font-weight-text, 400);
+}
+
+.store-filters__title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+  color: var(--color-text-strong, #1f2937);
+  font-size: 17px;
+  font-weight: inherit;
+  line-height: 1.6;
+}
+
+.store-filters__title svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* ----- one block ----- */
+
+.store-filters__section {
+  border-bottom: 1px solid #ebedf2;
+}
+
+.store-filters__section:last-of-type {
+  border-bottom: 0;
+}
+
+.store-filters__section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 56px;
+  padding: 0;
+  color: var(--color-text-strong, #1f2937);
+  font-family: inherit;
+  font-size: 15px;
+  text-align: right;
+  background: none;
+}
+
+.store-filters__section-header svg {
+  width: 22px;
+  height: 22px;
+  color: #45474a;
+}
+
+.store-filters__options {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 8px;
+}
+
+.store-filters__option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  color: var(--color-text, #45474a);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.store-filters__option input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  flex-shrink: 0;
+  accent-color: var(--color-primary, #1159fc);
+  cursor: pointer;
+}
+
+/* ----- buttons (mobile sheet) ----- */
+
+.store-filters__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.store-filters__cancel {
+  padding: 0 20px;
+  color: var(--color-primary, #1159fc);
+  font-family: inherit;
+  font-size: 15px;
+  background: none;
+}
+
+.store-filters__apply {
+  flex: 1;
+  height: 56px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 16px;
+  background: #050b36;
+  border-radius: 18px;
+}
+
+@media (max-width: 480px) {
+  .store-filters__apply {
+    height: 52px;
+  }
+}

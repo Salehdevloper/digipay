@@ -1,4 +1,8 @@
+import { useState } from "react";
+
 import { FiHelpCircle, FiShoppingBag } from "react-icons/fi";
+
+import PurchaseGuideModal from "../PurchaseGuideModal/PurchaseGuideModal";
 
 import { resolveImage } from "../../utils/resolveImage";
 
@@ -39,8 +43,10 @@ function StoreProfile({ store }) {
     tags = [],
     website = "#",
     inStoreUrl,
-    guideUrl = "#",
   } = store;
+
+  // «راهنمای خرید» opens the guide window (components/PurchaseGuideModal)
+  const [isGuideOpen, setIsGuideOpen] = useState(false);
 
   const logo = resolveImage(BRAND_LOGOS, id);
   const cover = resolveImage(STORE_COVERS, id);
@@ -121,10 +127,14 @@ function StoreProfile({ store }) {
             <header className="store-profile__about-header">
               <h2 className="store-profile__about-title">معرفی فروشگاه</h2>
 
-              <a href={guideUrl} className="store-profile__guide">
+              <button
+                type="button"
+                className="store-profile__guide"
+                onClick={() => setIsGuideOpen(true)}
+              >
                 <FiHelpCircle aria-hidden="true" />
                 راهنمای خرید
-              </a>
+              </button>
             </header>
 
             {description && (
@@ -143,6 +153,10 @@ function StoreProfile({ store }) {
           </div>
         )}
       </div>
+
+      {isGuideOpen && (
+        <PurchaseGuideModal onClose={() => setIsGuideOpen(false)} />
+      )}
     </section>
   );
 }

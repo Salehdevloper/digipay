@@ -1,0 +1,354 @@
+/* =========================================================
+   PurchaseGuideModal.css  («راهنمای فروشگاه‌ها»)
+
+   1. Overlay & window (desktop: centered)
+   2. Header & intro
+   3. Accordion rows
+   4. «نحوه خرید و پرداخت» steps
+   5. Mobile (<= 1000px): slides up from the bottom
+========================================================= */
+
+/* =========================
+   1. Overlay & window
+========================== */
+
+.guide-modal__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-mobile-menu, 5000);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(15, 20, 36, 0.55);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  animation: guide-fade 0.25s ease both;
+}
+
+.guide-modal {
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 812px);
+  max-height: min(90vh, 880px);
+  max-height: min(90dvh, 880px);
+  overflow: hidden;
+  color: var(--color-text-strong, #1f2937);
+  font-family: var(--font-main), sans-serif;
+  font-weight: var(--font-weight-text, 400);
+  background: var(--color-surface, #fff);
+  border-radius: 32px;
+  box-shadow: 0 30px 80px rgba(10, 15, 40, 0.35);
+  animation: guide-pop 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes guide-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes guide-pop {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* =========================
+   2. Header & intro
+========================== */
+
+/* the X is first, so in RTL it sits on the right, next to the title */
+.guide-modal__header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+  padding: 28px 36px 10px;
+}
+
+.guide-modal__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: #111;
+  background: none;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+.guide-modal__close:hover {
+  background: #f2f3f6;
+}
+
+.guide-modal__close svg {
+  width: 26px;
+  height: 26px;
+}
+
+.guide-modal__title {
+  font-size: 18px;
+  font-weight: inherit;
+  line-height: 1.6;
+}
+
+/* only this part scrolls; the title stays on top */
+.guide-modal__body {
+  flex: 1;
+  min-height: 0;
+  padding: 0 36px 32px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.guide-modal__intro {
+  margin: 8px 0 26px;
+  color: var(--color-text, #45474a);
+  font-size: 14px;
+  line-height: 2;
+  text-align: justify;
+}
+
+.guide-modal__list {
+  border-top: 1px solid #ebedf2;
+}
+
+/* =========================
+   3. Accordion rows
+========================== */
+
+.guide-item {
+  border-bottom: 1px solid #ebedf2;
+}
+
+.guide-item:last-child {
+  border-bottom: 0;
+}
+
+.guide-item__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 84px;
+  padding: 0;
+  color: inherit;
+  font-family: inherit;
+  font-size: 16px;
+  text-align: right;
+  background: none;
+}
+
+.guide-item__icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  stroke-width: 1.6;
+}
+
+.guide-item__title {
+  line-height: 1.6;
+}
+
+.guide-item__chevron {
+  width: 24px;
+  height: 24px;
+  margin-inline-start: auto; /* to the left */
+  flex-shrink: 0;
+  color: #45474a;
+  transition: transform 0.3s ease;
+}
+
+.guide-item--open .guide-item__chevron {
+  transform: rotate(180deg);
+}
+
+/* closed: height 0 and hidden (not focusable, not read aloud) */
+.guide-item__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition:
+    grid-template-rows 0.35s ease,
+    visibility 0s linear 0.35s;
+}
+
+.guide-item--open .guide-item__panel {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition:
+    grid-template-rows 0.35s ease,
+    visibility 0s;
+}
+
+.guide-item__panel-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.guide-item__description {
+  padding-bottom: 20px;
+  color: var(--color-text, #45474a);
+  font-size: 14px;
+  line-height: 2;
+}
+
+.guide-item__image {
+  display: block;
+  width: min(100%, 312px);
+  height: auto;
+  margin: 0 auto 24px;
+  border-radius: 28px;
+}
+
+/* =========================
+   4. Steps box
+========================== */
+
+.guide-steps {
+  margin-bottom: 28px;
+  padding: 20px 22px 24px;
+  background: #f7f8fd;
+  border-radius: 20px;
+}
+
+.guide-steps__title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  font-weight: inherit;
+  line-height: 1.6;
+}
+
+/* the big dot before the title (24px; its center = the step dots' center) */
+.guide-steps__ring {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  background: #dbe7ff;
+  border-radius: 50%;
+}
+
+.guide-steps__ring::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background: var(--color-primary, #1159fc);
+  border-radius: 50%;
+}
+
+.guide-steps__list {
+  margin-top: 14px;
+}
+
+/* each step: a dot on the right and a dashed line down to the next dot */
+.guide-steps__step {
+  position: relative;
+  padding: 4px 36px 4px 0;
+  color: var(--color-text-strong, #1f2937);
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.guide-steps__step + .guide-steps__step {
+  margin-top: 10px;
+}
+
+.guide-steps__step::before {
+  content: "";
+  position: absolute;
+  top: 12px;
+  right: 7px;
+  width: 10px;
+  height: 10px;
+  background: var(--color-primary, #1159fc);
+  border-radius: 50%;
+}
+
+.guide-steps__step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 24px;
+  right: 11px;
+  height: calc(100% - 12px + 10px);
+  border-right: 2px dashed #d3daee;
+}
+
+/* =========================
+   5. Mobile (<= 1000px)
+   A sheet that slides up from the bottom of the screen.
+========================== */
+
+@media (max-width: 1000px) {
+  .guide-modal__overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .guide-modal {
+    width: 100%;
+    max-height: 92vh;
+    max-height: 92dvh;
+    border-radius: 28px 28px 0 0;
+    animation: guide-slide-up 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .guide-modal__header {
+    padding: 20px 20px 6px;
+  }
+
+  .guide-modal__body {
+    padding: 0 20px calc(28px + env(safe-area-inset-bottom));
+  }
+
+  .guide-modal__title {
+    font-size: 17px;
+  }
+
+  .guide-modal__intro {
+    margin-bottom: 18px;
+    font-size: 13px;
+  }
+
+  .guide-item__header {
+    min-height: 68px;
+    font-size: 15px;
+  }
+
+  .guide-steps {
+    padding: 16px 16px 18px;
+  }
+}
+
+@keyframes guide-slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .guide-modal__overlay,
+  .guide-modal,
+  .guide-item__panel,
+  .guide-item__chevron {
+    animation: none;
+    transition: none;
+  }
+}

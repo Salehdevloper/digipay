@@ -198,6 +198,47 @@ export const BANI_MOD_PRODUCTS = [
     installments: 4,
     bestSeller: true,
     href: "https://www.banimode.com/BM-556856/%D8%B4%D9%88%D8%B1%D8%AA-%D9%85%D8%B1%D8%AF%D8%A7%D9%86%D9%87-%D9%83%D9%88%D8%AA%D9%88%D9%86-%D9%85%D8%AF%D9%84-7wlm90002mk.html?dp-source=DP&dp-medium=normal-carousel&dp-type=product&dp-campaign=%D9%BE%D8%B1%D9%81%D8%B1%D9%88%D8%B4%E2%80%8C%D8%AA%D8%B1%DB%8C%D9%86%E2%80%8C%D9%87%D8%A7%DB%8C+%D8%A8%D8%A7%D9%86%DB%8C%E2%80%8C%D9%85%D8%AF",
+  },
+
+  /* ---------- قسطی شگفت ----------
+     flashDeal: true  */
+  
+  {
+    id: "rainy-women",
+    title: "باراني زنانه پيركاردين كد RAM6406073",
+    price: 8700000,
+    oldPrice: 17400000,
+    rating: 4.6,
+    paymentTypes: ["loan", "credit"],
     flashDeal: true,
+    href: "https://www.banimode.com/BM-479365/%D8%A8%D8%A7%D8%B1%D8%A7%D9%86%D9%8A-%D8%B2%D9%86%D8%A7%D9%86%D9%87-%D9%BE%D9%8A%D8%B1%D9%83%D8%A7%D8%B1%D8%AF%D9%8A%D9%86-%D9%83%D8%AF-ram6406073.html?dp-source=DP&dp-medium=normal-carousel&dp-type=product&dp-campaign=%D9%82%D8%B3%D8%B7%DB%8C+%D8%B4%DA%AF%D9%81%D8%AA",
+  },
+  {
+    id: "woven-skirt",
+    title: "دامن بافت زنانه سوپردراي كد 6086000",
+    price: 2755600,
+    oldPrice: 6889000,
+    rating: 4.6,
+    paymentTypes: ["loan", "credit"],
+    href: "https://www.banimode.com/BM-471631/%D8%AF%D8%A7%D9%85%D9%86-%D8%A8%D8%A7%D9%81%D8%AA-%D8%B2%D9%86%D8%A7%D9%86%D9%87-%D8%B3%D9%88%D9%BE%D8%B1%D8%AF%D8%B1%D8%A7%D9%8A-%D9%83%D8%AF-6086000.html?dp-source=DP&dp-medium=normal-carousel&dp-type=product&dp-campaign=%D9%82%D8%B3%D8%B7%DB%8C+%D8%B4%DA%AF%D9%81%D8%AA",
+  },
+  {
+    id: "long-coat-women",
+    title: "پالتو بلند زنانه پيركاردين كد POM8406080",
+    price: 15500000,
+    oldPrice: 31000000,
+    rating: 4.6,
+    paymentTypes: ["loan", "credit"],
+    flashDeal: true,
+    href: "https://www.banimode.com/BM-474361/%D9%BE%D8%A7%D9%84%D8%AA%D9%88-%D8%B2%D9%86%D8%A7%D9%86%D9%87-%D9%BE%D9%8A%D8%B1%D9%83%D8%A7%D8%B1%D8%AF%D9%8A%D9%86-%D9%83%D8%AF-pom8406080.html?dp-source=DP&dp-medium=normal-carousel&dp-type=product&dp-campaign=%D9%82%D8%B3%D8%B7%DB%8C+%D8%B4%DA%AF%D9%81%D8%AA",
+  },
+  {
+    id: "puffer-men",
+    title: "پافر مردانه پيركاردين مدل MOVD60306011",
+    price: 19600000,
+    oldPrice: 39200000,
+    rating: 4.6,
+    paymentTypes: ["loan", "credit"],
+    href: "https://www.banimode.com/BM-560381/%D9%BE%D8%A7%D9%81%D8%B1-%D9%85%D8%B1%D8%AF%D8%A7%D9%86%D9%87-%D9%BE%D9%8A%D8%B1%D9%83%D8%A7%D8%B1%D8%AF%D9%8A%D9%86-%D9%85%D8%AF%D9%84-movd60306011.html?dp-source=DP&dp-medium=normal-carousel&dp-type=product&dp-campaign=%D9%82%D8%B3%D8%B7%DB%8C+%D8%B4%DA%AF%D9%81%D8%AA",
   },
 ];

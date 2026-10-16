@@ -1,0 +1,279 @@
+/* =========================================================
+   PartnerPromo.css  (کارت «تخفیف‌های تکرار نشدنی» و نوار گردان)
+
+   1. Card & header
+   2. Turning belt
+   3. Product tile
+   4. Mobile
+   5. Reduced motion
+========================================================= */
+
+/* =========================
+   1. Card & header
+========================== */
+
+.partner-promo {
+  --promo-tile: 150px;
+  --promo-gap: 16px;
+
+  direction: rtl;
+  padding-bottom: var(--section-space, 80px);
+  font-family: var(--font-main), sans-serif;
+  font-weight: var(--font-weight-text, 400);
+}
+
+.partner-promo__card {
+  width: min(
+    100% - var(--container-gutter, 40px),
+    var(--container-width-wide, 1355px)
+  );
+  margin-inline: auto;
+  padding: 20px 20px 24px;
+  overflow: hidden; /* the belt is cut at the rounded edges */
+  background: var(--color-surface, #fff);
+  border-radius: 28px;
+}
+
+.partner-promo__header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.partner-promo__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  overflow: hidden;
+  color: #fff;
+  font-size: 22px;
+  background: #ff5a1f;
+  border-radius: 50%;
+}
+
+.partner-promo__logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.partner-promo__heading {
+  min-width: 0;
+}
+
+.partner-promo__title {
+  color: var(--color-text-strong, #1f2937);
+  font-size: 20px;
+  font-weight: inherit;
+  line-height: 1.5;
+}
+
+.partner-promo__subtitle {
+  margin-top: 2px;
+  color: #7b7e84;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* round blue arrow, on the left */
+.partner-promo__arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  margin-inline-start: auto;
+  flex-shrink: 0;
+  color: var(--color-primary, #1159fc);
+  background: #e8edf8;
+  border-radius: 50%;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.partner-promo__arrow svg {
+  width: 22px;
+  height: 22px;
+}
+
+.partner-promo__arrow:hover {
+  background: #dbe4f7;
+  transform: translateX(-3px);
+}
+
+/* =========================
+   2. Turning belt
+   The track holds the list twice and moves by exactly one list
+   (50% of its width), so the end of the loop looks like its start.
+========================== */
+
+.partner-promo__viewport {
+  overflow: hidden;
+}
+
+.partner-promo__track {
+  display: flex;
+  width: max-content;
+  animation: partner-promo-turn linear infinite;
+}
+
+/* the belt stops while the mouse is on it */
+.partner-promo__viewport:hover .partner-promo__track {
+  animation-play-state: paused;
+}
+
+@keyframes partner-promo-turn {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* the page is RTL: the belt moves to the right */
+    transform: translateX(50%);
+  }
+}
+
+.partner-promo__set {
+  display: flex;
+  flex-shrink: 0;
+}
+
+/* margin (not gap) keeps both copies exactly the same width */
+.partner-promo__item {
+  flex: 0 0 var(--promo-tile);
+  margin-inline-end: var(--promo-gap);
+}
+
+/* =========================
+   3. Product tile
+========================== */
+
+.partner-promo__tile {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 0.97;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f2f3f6 0%, #f8f9fb 100%);
+  border-radius: 24px;
+  transition: transform 0.25s ease;
+}
+
+@media (hover: hover) {
+  .partner-promo__tile:hover {
+    transform: translateY(-3px);
+  }
+}
+
+.partner-promo__tile img {
+  width: 78%;
+  height: 78%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.partner-promo__placeholder {
+  width: 34px;
+  height: 34px;
+  color: #c3c6d0;
+  stroke-width: 1.4;
+}
+
+/* red discount badge, top-left */
+.partner-promo__badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+  padding: 1px 9px;
+  color: #fff;
+  font-size: 12px;
+  line-height: 1.8;
+  background: var(--color-danger, #f9441f);
+  border-radius: 14px;
+}
+
+/* =========================
+   4. Mobile
+========================== */
+
+@media (max-width: 1000px) {
+  .partner-promo {
+    --promo-tile: 118px;
+    --promo-gap: 12px;
+  }
+
+  .partner-promo__card {
+    padding: 16px 14px 18px;
+    border-radius: 24px;
+  }
+
+  .partner-promo__header {
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .partner-promo__logo {
+    width: 48px;
+    height: 48px;
+    font-size: 18px;
+  }
+
+  .partner-promo__title {
+    font-size: 16px;
+  }
+
+  .partner-promo__subtitle {
+    font-size: 13px;
+  }
+
+  .partner-promo__arrow {
+    width: 40px;
+    height: 40px;
+  }
+
+  .partner-promo__tile {
+    border-radius: 20px;
+  }
+
+  .partner-promo__badge {
+    top: 8px;
+    left: 8px;
+    padding: 0 7px;
+    font-size: 11px;
+  }
+}
+
+/* =========================
+   5. Reduced motion
+   No turning belt: the row is scrolled by hand.
+========================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .partner-promo__viewport {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .partner-promo__viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .partner-promo__track {
+    animation: none;
+  }
+
+  .partner-promo__set--copy {
+    display: none;
+  }
+
+  .partner-promo__tile,
+  .partner-promo__arrow {
+    transition: none;
+  }
+}
