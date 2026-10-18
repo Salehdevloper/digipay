@@ -1,0 +1,124 @@
+/* =========================================================
+   BannerStrip.css  (نوار بنرها با نقطه‌های پایین)
+
+   Size of a banner: change --strip-ratio to the REAL size of your
+   banner pictures (width / height) so nothing is cropped.
+========================================================= */
+
+.banner-strip {
+  --strip-ratio: 415 / 125; /* picture width / height */
+  --strip-visible: 3.15; /* banners on screen (the .15 = the next one peeking) */
+  --strip-gap: 12px;
+
+  direction: rtl;
+  padding-bottom: var(--section-space, 80px);
+}
+
+.banner-strip__container {
+  width: min(
+    100% - var(--container-gutter, 40px),
+    var(--container-width-wide, 1355px)
+  );
+  margin-inline: auto;
+}
+
+/* ----- the row ----- */
+
+.banner-strip__viewport {
+  display: flex;
+  gap: var(--strip-gap);
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+  cursor: grab;
+}
+
+.banner-strip__viewport::-webkit-scrollbar {
+  display: none;
+}
+
+/* while the mouse drags: no snapping, no text selection */
+.banner-strip__viewport--dragging {
+  scroll-snap-type: none;
+  cursor: grabbing;
+  user-select: none;
+}
+
+.banner-strip__banner {
+  flex: 0 0
+    calc(
+      (100% - var(--strip-gap) * (var(--strip-visible) - 1)) /
+        var(--strip-visible)
+    );
+  aspect-ratio: var(--strip-ratio);
+  overflow: hidden;
+  background: #e4e7ef; /* shown until the picture is there */
+  border-radius: 28px;
+  scroll-snap-align: start;
+}
+
+.banner-strip__banner img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* ----- dots ----- */
+
+.banner-strip__dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 18px;
+}
+
+.banner-strip__dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  background: #cfd1d6;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    width 0.3s ease,
+    background-color 0.3s ease;
+}
+
+/* bigger invisible touch target */
+.banner-strip__dot::after {
+  content: "";
+  position: absolute;
+  inset: -8px -3px;
+}
+
+.banner-strip__dot--active {
+  width: 20px;
+  background: #111;
+}
+
+/* ----- tablet / mobile: a bigger banner with the next one peeking ----- */
+
+@media (max-width: 1000px) {
+  .banner-strip {
+    --strip-visible: 1.35;
+    --strip-gap: 10px;
+  }
+
+  .banner-strip__banner {
+    border-radius: 22px;
+  }
+
+  .banner-strip__dots {
+    margin-top: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .banner-strip {
+    --strip-visible: 1.12;
+  }
+}

@@ -6,15 +6,23 @@
  *   name          store name
  *   tagline       one line under the name
  *   paymentLabels small gray labels ("خرید اعتباری", ...)
- *   description   "معرفی فروشگاه" text (leave "" to hide the block)
+ *   description   "معرفی فروشگاه" text (leave "" to hide the block).
+ *                 A new line = a new paragraph. **text** = highlighted text.
  *   tags          chips under the text
- *   website       "خرید آنلاین" button link
- *   inStoreUrl    optional: adds a "خرید حضوری" button (stores with shops)
+ *   website       "خرید آنلاین" button link (opens in a NEW tab).
+ *                 No website = no online button (in-store only shops)
+ *   inStoreUrl    optional: adds a "خرید حضوری" button (opens in a NEW tab)
+ *   inactive      true = the store is not active in دیجی‌پی right now: its page shows
+ *                 a «غیرفعال در دیجی‌پی» badge and the buttons are disabled
+ *   types         optional: ["offline"] for a shop that exists only in person.
+ *                 Without it: online if it has a website, in-store if it has
+ *                 an inStoreUrl.
  *   category      category id (data/storeCategories.js): used by the filter page
  *   cashback      % back when paying with دیجی‌کارت (0 / missing = none)
  *   createdAt     "2026-03-01", only for the «جدیدترین» sort
  *
- * Only بانی مد has a full text; the others are samples, replace them.
+ * The 9 shops at the end are in-store only (the «حضوری» tab of «فروشگاه‌ها»).
+ * Only پیر کاردین has a text so far; add the others when you have them.
  */
 
 export const STORES = [
@@ -130,6 +138,102 @@ export const STORES = [
     description: "قسمتی از لباس که دست را پوشد از بن دوش تا بند دست. قسمتى كه دست برای پوشیدن لباس، از آن می‌گذرد. تنگ یا گشاد، كوتاه یا بلند است، يا حتى نیست، اما در نبودنش نيز هنوز هست؛ آن‌طور که هست و نیست در «آستين حلقه‌اى»! همیشه برای صاحب لباس جای امنی بوده و دور از چشم دیگران، تردستی‌ها را برای وقت لازم نگه می‌داشته؛ چنان‌که دیدن شعبده‌باز بی‌آستین چیزی است شبیه دیدن فیل پرنده. از طرف دیگر، کدام یکی از ما حداقل یک بار در زندگی کودکانه‌مان، تقصیر خود و دست‌مان را به گردن این رفیق همیشه‌دردسترس نینداخته‌ایم و نخوانده‌ایم: من نبودم دستم بود... در زمان‌های دور، عشاق برای اثبات شدت دلسوختگی به معشوق، نشان‌ عشق خود را داغ‌شده بر بازوی پوشیده در آستین نگه می‌داشتند: گواه شاهد صادق در آستین باشد. فروشگاه آنلاین آستین نامش را در همین معنی‌ها پیدا می‌کند؛ یعنی هر کجا فکر کردید تمام کارت‌های سلیقه‌تان رو شده‌، آستین برایتان شعبده‌ای تازه خواهد داشت. آس پیک؛ گُلی که ناگهان از پشت گوش‌تان می‌روید و لبخندی که بر لب‌تان می‌نشیند... این فروشگاه آنلاين می‌خواهد رفیق خنده‌ برلب آن‌هایی باشد که برای پوشیدن لباسی تازه و ایرانی، دست اعتماد در آستین او می‌کنند؛ جایی برای آشنایی با طراحان ايران...",
     tags: [],
     website: "#",
+  },
+
+  /* ---------- فروشگاه‌های حضوری (فقط حضوری) ----------
+     Same fields; no website = no «خرید آنلاین» button. */
+  {
+    id: "pierre-cardin",
+    name: "پیر کاردین",
+    category: "fashion",
+    types: ["offline"],
+    tagline: "مد و پوشاک",
+    paymentLabels: ["خرید اعتباری", "خرید با وام"],
+    description:
+      "**فروشگاه اینترنتی پوشاک ایران پیرکاردین** بهترین گزینه برای خرید اینترنتی **پوشاک برند پیرکاردین در ایران** می باشد که در سال ۱۳۹۸ پس از ایجاد بسترهای سخت افزاری و نرم افزاری و ارائه بهترین خدمات در کمترین زمان ممکن آغاز به کار نموده است.\nدر دنیای امروز توسعه اینترنت، روشهای خرید را به کلی دگرگون کرده، منافع موجود در خریدهای اینترنتی، روزانه تعداد بیشتری از مردم را به انجام آن و ایجاد تغییر در روش های متداول خود در خرید ترغیب می کند. خریدهای اینترنتی با سرعت بیشتری با زندگی مدرن امروزی همگام شده و توانسته جایگاه مناسب تری برای خود در رفع نیازهای مشتریان پیدا کند.",
+    tags: ["مد و پوشاک"],
+  },
+  {
+    id: "doris",
+    name: "درریس",
+    inactive: true, // «غیرفعال در دیجی‌پی»: badge + disabled buttons
+    category: "fashion",
+    tagline: "طلا و مسکوکات",
+    paymentLabels: ["خرید با وام", "خرید اعتباری"],
+    description:
+      "کلمه‌ی «دُرّیس» از نظر لغوی به معنای ریسمانی‌ست از دُر، که در واقع همان مروارید است.نخستین شعبه‌ی گالری سنگ و طلای درریس در سال ۱۳۹۳ در مرکز خرید گلستان، توسط بهار سلیمی و هامون شجاعی افتتاح گردید.امروزه مجموعه‌ی درریس با ۴۲ شعبه و بیش از ۴۰۰ پرسنل، با افتخار در خدمت شما عزیزان می‌باشند.ما برای القای حس صمیمی و شریک شدن این خانواده با شما، سعی کرده‌ایم که در تمام شعب، معماری و فضایی آشنا را برای شما نمایشگر باشیم، تا به راحتی این خانواده‌ی بزرگ برای شما در هر کجای ایران قابل تمییز و تشخیص باشد.",
+    tags: ["انگشتر", "زنجیر", "دستبند", "آویز"],
+    website: "#",
+  },
+  {
+    id: "charm-mashhad",
+    name: "چرم مشهد",
+    category: "fashion",
+    types: ["offline"],
+    tagline: "مد و پوشاک",
+    paymentLabels: ["خرید اعتباری", "خرید با وام"],
+    description: "",
+    tags: ["مد و پوشاک"],
+  },
+  {
+    id: "david-jones",
+    name: "دیوید جونز",
+    category: "fashion",
+    types: ["offline"],
+    tagline: "مد و پوشاک",
+    paymentLabels: ["خرید اعتباری", "خرید با وام"],
+    description: "",
+    tags: ["مد و پوشاک"],
+  },
+  {
+    id: "komar",
+    name: "کوماز",
+    category: "fashion",
+    types: ["offline"],
+    tagline: "مد و پوشاک",
+    paymentLabels: ["خرید اعتباری", "خرید با وام"],
+    description: "",
+    tags: ["مد و پوشاک"],
+  },
+  {
+    id: "lc-waikiki",
+    name: "ال سی وایکیکی",
+    category: "fashion",
+    types: ["offline"],
+    tagline: "مد و پوشاک",
+    paymentLabels: ["خرید اعتباری", "خرید با وام"],
+    description: "",
+    tags: ["مد و پوشاک"],
+  },
+  {
+    id: "rest",
+    name: "رست",
+    category: "fashion",
+    types: ["offline"],
+    tagline: "مد و پوشاک",
+    paymentLabels: ["خرید اعتباری", "خرید با وام"],
+    description: "",
+    tags: ["مد و پوشاک"],
+  },
+  {
+    id: "roja",
+    name: "روژا",
+    category: "fashion",
+    types: ["offline"],
+    tagline: "مد و پوشاک",
+    paymentLabels: ["خرید اعتباری", "خرید با وام"],
+    description: "",
+    tags: ["مد و پوشاک"],
+  },
+  {
+    id: "serge",
+    name: "سرژه",
+    category: "fashion",
+    types: ["offline"],
+    tagline: "مد و پوشاک",
+    paymentLabels: ["خرید اعتباری", "خرید با وام"],
+    description: "",
+    tags: ["مد و پوشاک"],
   },
 ];
 

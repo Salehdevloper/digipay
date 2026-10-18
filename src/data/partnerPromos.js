@@ -1,5 +1,3 @@
-import { isShownOn } from "../utils/flags";
-
 /**
  * Partner promo rows: a white card with a brand, a title, an arrow and a
  * belt of small discounted products that turns by itself.
@@ -11,16 +9,14 @@ import { isShownOn } from "../utils/flags";
  *   title       big text            «تخفیف‌های تکرار نشدنی»
  *   subtitle    gray text under it  «در تپسی‌شاپ»
  *   url         where the arrow and the products go
- *   pages       where the row appears (see utils/flags.js):  ["home"]
- *   afterStore  optional: the row comes right after the best-sellers row of
- *               this store ("bani-mod"). Without it (or if that store has no
- *               row on the page) it goes after all the best-sellers rows.
  *   items       the products on the belt:
  *                 id        picture file name
  *                 discount  number for the red badge (0 shows «۰٪»); leave it
  *                           out to hide the badge
  *                 url       optional: a different link for this product
  *
+ * Where the row appears (which page, after which section) is decided in
+ * config/pageLayout.js with  "promo:<id>".
  * A new row = a new object in the list below.
  */
 
@@ -32,8 +28,6 @@ export const PARTNER_PROMOS = [
     title: "تخفیف‌های تکرار نشدنی",
     subtitle: "در تپسی‌شاپ",
     url: "https://tapsi.shop/search?collectionId=1363916929025880064&dp-source=DP",
-    pages: true,
-    afterStore: "bani-mod",
     items: [
       { id: "p1", discount: 22 },
       { id: "p2", discount: 29 },
@@ -49,6 +43,5 @@ export const PARTNER_PROMOS = [
   },
 ];
 
-/** The promo rows that should appear on a page ("home", "stores", ...). */
-export const getPartnerPromos = (page) =>
-  PARTNER_PROMOS.filter((promo) => isShownOn(promo.pages, page));
+export const getPartnerPromoById = (id) =>
+  PARTNER_PROMOS.find((promo) => promo.id === id);

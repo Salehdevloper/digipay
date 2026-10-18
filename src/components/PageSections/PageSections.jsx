@@ -1,64 +1,93 @@
-import { Fragment } from "react";
-
-import { PAGE_SECTIONS } from "../../config/pageSections";
+import { PAGE_LAYOUT } from "../../config/pageLayout";
+import { getBannerStripById } from "../../data/bannerStrips";
 import { getBestSellerGroups } from "../../data/bestSellers";
-import { getPartnerPromos } from "../../data/partnerPromos";
+import { getPartnerPromoById } from "../../data/partnerPromos";
+import { getPosterSectionById } from "../../data/posterSections";
 
+import BannerStrip from "../BannerStrip/BannerStrip";
 import DiscountCodes from "../DiscountCodes/DiscountCodes";
 import FlashDeals from "../FlashDeals/FlashDeals";
 import PartnerPromo from "../PartnerPromo/PartnerPromo";
+import PosterSection from "../PosterSection/PosterSection";
 import ProductSection from "../ProductSection/ProductSection";
 
+/* One «پرفروش‌ترین‌های <فروشگاه>» row */
+function BestSellerRow({ group }) {
+  const { store, products, codes } = group;
+
+  return (
+    <ProductSection
+      title={`پرفروش‌ترین‌های ${store.name}`}
+      products={products}
+      discountCodes={codes}
+      allHref={`/stores/${store.id}`}
+    />
+  );
+}
+
 /**
- * The extra sections of a page, switched on / off in
- * config/pageSections.js (true / false):
+ * Draws the sections of a page in the order written in
+ * config/pageLayout.js:
  *
  *   <PageSections page="home" />      home page
  *   <PageSections page="stores" />    «فروشگاه‌ها», online tab
  *
- * Order:
- *   1. قسطی شگفت
- *   2. کد تخفیف            (the slider with all codes)
- *   3. پرفروش‌ترین‌های <فروشگاه>   one row per store
- *      + partner promo rows (data/partnerPromos.js), each one right after
- *        the row of the store named in its `afterStore`
+ * An entry is  "type"  or  "type:id"  (see the list in pageLayout.js).
+ * A section with nothing to show (no products, unknown id) draws nothing.
  */
 function PageSections({ page }) {
-  const sections = PAGE_SECTIONS[page] ?? {};
+  const layout = PAGE_LAYOUT[page] ?? [];
 
-  const groups = sections.bestSellers ? getBestSellerGroups(page) : [];
-  const promos = sections.partnerPromos ? getPartnerPromos(page) : [];
+  const groups = getBestSellerGroups(page);
 
-  // a promo whose store has no row on this page goes after all the rows
-  const hasRow = (storeId) => groups.some(({ store }) => store.id === storeId);
-  const looseRows = promos.filter((promo) => !hasRow(promo.afterStore));
+  // stores that the layout names one by one ("bestSellers:bani-mod")
+  const placedStoreIds = layout
+    .filter((entry) => entry.startsWith("bestSellers:"))
+    .map((entry) => entry.split(":")[1]);
 
   return (
     <>
-      {sections.flashDeals && <FlashDeals />}
+      {layout.map((entry, index) => {
+        const [type, id] = entry.split(":");
+        const key = `${entry}-${index}`;
 
-      {sections.discountCodes && <DiscountCodes />}
+        switch (type) {
+          case "flashDeals":
+            return <FlashDeals key={key} />;
 
-      {groups.map(({ store, products, codes }) => (
-        <Fragment key={store.id}>
-          <ProductSection
-            title={`پرفروش‌ترین‌های ${store.name}`}
-            products={products}
-            discountCodes={codes}
-            allHref={`/stores/${store.id}`}
-          />
+          case "discountCodes":
+            return <DiscountCodes key={key} />;
 
-          {promos
-            .filter((promo) => promo.afterStore === store.id)
-            .map((promo) => (
-              <PartnerPromo promo={promo} key={promo.id} />
-            ))}
-        </Fragment>
-      ))}
+          case "bestSellers": {
+            // "bestSellers:bani-mod" -> one store, "bestSellers" -> the rest
+            const rows = id
+              ? groups.filter(({ store }) => store.id === id)
+              : groups.filter(({ store }) => !placedStoreIds.includes(store.id));
 
-      {looseRows.map((promo) => (
-        <PartnerPromo promo={promo} key={promo.id} />
-      ))}
+            return rows.map((group) => (
+              <BestSellerRow group={group} key={`${key}-${group.store.id}`} />
+            ));
+          }
+
+          case "promo": {
+            const promo = getPartnerPromoById(id);
+            return promo ? <PartnerPromo promo={promo} key={key} /> : null;
+          }
+
+          case "posters": {
+            const section = getPosterSectionById(id);
+            return section ? <PosterSection section={section} key={key} /> : null;
+          }
+
+          case "banners": {
+            const strip = getBannerStripById(id);
+            return strip ? <BannerStrip strip={strip} key={key} /> : null;
+          }
+
+          default:
+            return null;
+        }
+      })}
     </>
   );
 }

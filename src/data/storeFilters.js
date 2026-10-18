@@ -31,9 +31,14 @@ export const DEFAULT_SORT = "popular";
    What a store supports (read from data/stores.js)
 ========================================================= */
 
-/** Every store is online; one with inStoreUrl also has shops (حضوری). */
+/**
+ * Where a store sells:
+ *   - `types: ["offline"]` in data/stores.js says it directly
+ *   - otherwise: "online" if it has a website, "offline" if it has an inStoreUrl
+ */
 export const getStoreTypes = (store) =>
-  store.inStoreUrl ? ["online", "offline"] : ["online"];
+  store.types ??
+  [store.website && "online", store.inStoreUrl && "offline"].filter(Boolean);
 
 /** paymentLabels -> ["credit", "loan", ...] */
 export const getStorePaymentIds = (store) =>

@@ -25,6 +25,27 @@ const STORE_COVERS = import.meta.glob(
   { eager: true, import: "default" }
 );
 
+/* =========================================================
+   Description text: a new line = a new paragraph,
+   **text** = highlighted text (<strong>).
+========================================================= */
+
+function Description({ text }) {
+  return text.split("\n").map((paragraph, index) => (
+    <p className="store-profile__description" key={index}>
+      {paragraph.split("**").map((part, partIndex) =>
+        partIndex % 2 === 1 ? (
+          <strong className="store-profile__emphasis" key={partIndex}>
+            {part}
+          </strong>
+        ) : (
+          part
+        )
+      )}
+    </p>
+  ));
+}
+
 /**
  * Top card of a store page: cover photo, name, "خرید آنلاین" button,
  * "معرفی فروشگاه" text and category chips.
@@ -41,8 +62,9 @@ function StoreProfile({ store }) {
     paymentLabels = [],
     description,
     tags = [],
-    website = "#",
+    website,
     inStoreUrl,
+    inactive = false,
   } = store;
 
   // «راهنمای خرید» opens the guide window (components/PurchaseGuideModal)
@@ -73,9 +95,15 @@ function StoreProfile({ store }) {
             </span>
 
             <div className="store-profile__info">
-              <h1 className="store-profile__name" id="store-profile-name">
-                {name}
-              </h1>
+              <div className="store-profile__name-row">
+                <h1 className="store-profile__name" id="store-profile-name">
+                  {name}
+                </h1>
+
+                {inactive && (
+                  <span className="store-profile__badge">غیرفعال در دیجی‌پی</span>
+                )}
+              </div>
 
               {tagline && <p className="store-profile__tagline">{tagline}</p>}
 
@@ -99,26 +127,50 @@ function StoreProfile({ store }) {
             </div>
           </div>
 
-          {/* "خرید حضوری" only appears for stores that have shops (inStoreUrl) */}
-          <div className="store-profile__actions">
-            {inStoreUrl && (
-              <a
-                className="store-profile__cta store-profile__cta--secondary"
-                href={inStoreUrl}
-              >
-                خرید حضوری
-              </a>
-            )}
+          {/* Each button appears only when the store has that link:
+              inStoreUrl -> «خرید حضوری»,  website -> «خرید آنلاین».
+              Both open the other site in a NEW tab. */}
+          {(inStoreUrl || website) && (
+            <div className="store-profile__actions">
+              {inStoreUrl &&
+                (inactive ? (
+                  <span
+                    className="store-profile__cta store-profile__cta--secondary store-profile__cta--disabled"
+                    aria-disabled="true"
+                  >
+                    خرید حضوری
+                  </span>
+                ) : (
+                  <a
+                    className="store-profile__cta store-profile__cta--secondary"
+                    href={inStoreUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    خرید حضوری
+                  </a>
+                ))}
 
-            <a
-              className="store-profile__cta"
-              href={website}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              خرید آنلاین
-            </a>
-          </div>
+              {website &&
+                (inactive ? (
+                  <span
+                    className="store-profile__cta store-profile__cta--disabled"
+                    aria-disabled="true"
+                  >
+                    خرید آنلاین
+                  </span>
+                ) : (
+                  <a
+                    className="store-profile__cta"
+                    href={website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    خرید آنلاین
+                  </a>
+                ))}
+            </div>
+          )}
         </div>
 
         {/* ----- About + chips (hidden when the store has no text) ----- */}
@@ -130,6 +182,7 @@ function StoreProfile({ store }) {
               <button
                 type="button"
                 className="store-profile__guide"
+                disabled={inactive}
                 onClick={() => setIsGuideOpen(true)}
               >
                 <FiHelpCircle aria-hidden="true" />
@@ -137,9 +190,7 @@ function StoreProfile({ store }) {
               </button>
             </header>
 
-            {description && (
-              <p className="store-profile__description">{description}</p>
-            )}
+            {description && <Description text={description} />}
 
             {tags.length > 0 && (
               <ul className="store-profile__tags">

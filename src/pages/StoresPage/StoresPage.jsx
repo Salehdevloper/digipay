@@ -54,7 +54,10 @@ const IN_STORE_BRANDS = [
   { id: "rest", name: "رست" },
   { id: "roja", name: "روژا" },
   { id: "serge", name: "سرژه" },
-];
+].map((store) => ({
+  ...store,
+  to: `/stores/${store.id}`, // each shop has its own page (data/stores.js)
+}));
 
 const ONLINE_BRANDS = [
   { id: "mosbat-sabz", name: "مثبت سبز" },

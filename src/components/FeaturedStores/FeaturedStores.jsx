@@ -96,11 +96,11 @@ function FeaturedStores({ title, subtitle, stores, allHref = "#" }) {
             <li key={id}>
               {/* `to` = page inside the app, `href` = plain link */}
               {to ? (
-                <Link to={to} className="featured-stores__item">
+                <Link to={to} className="featured-stores__item" target="_blank">
                   {item}
                 </Link>
               ) : (
-                <a href={href} className="featured-stores__item">
+                <a href={href} className="featured-stores__item" target="_blank">
                   {item}
                 </a>
               )}

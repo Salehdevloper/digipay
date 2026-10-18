@@ -91,6 +91,24 @@
   height: 26px;
 }
 
+/* name + the "غیرفعال در دیجی‌پی" badge next to it */
+.store-profile__name-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.store-profile__badge {
+  padding: 3px 12px;
+  color: #fff;
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: nowrap;
+  background: #2b2f3d;
+  border-radius: 14px;
+}
+
 .store-profile__name {
   color: var(--color-text-strong, #1f2937);
   font-size: 22px;
@@ -141,6 +159,16 @@
 .store-profile__cta:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 22px rgba(5, 11, 54, 0.28);
+}
+
+/* inactive store: the buttons are gray and do nothing */
+.store-profile__cta--disabled,
+.store-profile__cta--disabled:hover {
+  color: #fff;
+  background: #b0b2c2;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
 }
 
 /* light button: in-store purchase */
@@ -197,7 +225,12 @@
   height: 20px;
 }
 
-.store-profile__guide:hover {
+.store-profile__guide:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.store-profile__guide:hover:not(:disabled) {
   opacity: 0.75;
 }
 
@@ -206,6 +239,18 @@
   font-size: 14px;
   line-height: 2;
   text-align: justify;
+}
+
+.store-profile__description + .store-profile__description {
+  margin-top: 4px;
+}
+
+/* the highlighted words of the description.
+   Darker color only (the font has one weight); for real bold add
+   font-weight: 700; here. */
+.store-profile__emphasis {
+  color: #111;
+  font-weight: inherit;
 }
 
 .store-profile__tags {
@@ -320,4 +365,10 @@
   .store-profile__cta {
     transition: none;
   }
+}
+
+.store-profile__cta--secondary.store-profile__cta--disabled,
+.store-profile__cta--secondary.store-profile__cta--disabled:hover {
+  color: #9aa2bd;
+  background: #eceef5;
 }

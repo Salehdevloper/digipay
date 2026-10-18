@@ -1,0 +1,285 @@
+/* =========================================================
+   PosterSection.css  (اسلایدر کارت‌های پوستری: علی بابا، فیلم‌نت، ...)
+
+   1. Section & slider   2. Card   3. Top   4. Bottom   5. Mobile
+========================================================= */
+
+/* =========================
+   1. Section & slider
+========================== */
+
+.poster-section {
+  --poster-width: 195px;
+  --poster-gap: 10px;
+
+  direction: rtl;
+  padding-bottom: var(--section-space, 80px);
+  font-family: var(--font-main), sans-serif;
+  font-weight: var(--font-weight-text, 400);
+}
+
+.poster-section__container {
+  width: min(
+    100% - var(--container-gutter, 40px),
+    var(--container-width-wide, 1355px)
+  );
+  margin-inline: auto;
+}
+
+.poster-section__title {
+  margin-bottom: 24px;
+  color: var(--color-text-strong, #1f2937);
+  font-size: 18px;
+  font-weight: inherit;
+  line-height: 1.6;
+}
+
+.poster-section__list {
+  display: flex;
+  gap: var(--poster-gap);
+  padding-bottom: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-snap-type: x proximity;
+  cursor: grab;
+}
+
+.poster-section__list::-webkit-scrollbar {
+  display: none;
+}
+
+.poster-section__list--dragging {
+  scroll-snap-type: none;
+  cursor: grabbing;
+  user-select: none;
+}
+
+.poster-section__item {
+  display: flex;
+  flex: 0 0 var(--poster-width);
+  scroll-snap-align: start;
+}
+
+/* =========================
+   2. Card
+========================== */
+
+.poster-card {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  aspect-ratio: 195 / 315;
+  overflow: hidden;
+  isolation: isolate;
+  color: #fff;
+  background: #151821;
+  border-radius: 28px;
+  transition: transform 0.25s ease;
+}
+
+@media (hover: hover) {
+  .poster-card:hover {
+    transform: translateY(-3px);
+  }
+}
+
+.poster-card__image {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* dark at the top and the bottom, so the texts are always readable */
+.poster-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.6) 0%,
+    rgba(0, 0, 0, 0) 34%,
+    rgba(0, 0, 0, 0) 52%,
+    rgba(0, 0, 0, 0.82) 100%
+  );
+}
+
+/* =========================
+   3. Top: brand + title
+========================== */
+
+.poster-card__top {
+  padding: 14px 14px 0;
+}
+
+.poster-card__brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.poster-card__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  overflow: hidden;
+  color: #111;
+  font-size: 15px;
+  background: #fff;
+  border-radius: 50%;
+}
+
+.poster-card__logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.poster-card__title {
+  margin-top: 6px;
+  font-size: 15px;
+  font-weight: inherit;
+  line-height: 1.85;
+}
+
+/* =========================
+   4. Bottom: price line + installment bar
+========================== */
+
+.poster-card__bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 10px 10px;
+}
+
+.poster-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-inline: 4px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.poster-card__full-price small {
+  font-size: 10px;
+  opacity: 0.85;
+}
+
+/* red discount badge */
+.poster-card__discount {
+  padding: 1px 10px;
+  font-size: 12px;
+  line-height: 1.7;
+  background: var(--color-danger, #f9441f);
+  border-radius: 14px;
+}
+
+/* dark glass bar: «۴ قسط» + amount */
+.poster-card__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 8px;
+  background: rgba(18, 20, 28, 0.55);
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.poster-card__installments {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  font-size: 9px;
+  line-height: 1.15;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+}
+
+.poster-card__installments strong {
+  font-size: 13px;
+  font-weight: inherit;
+}
+
+.poster-card__amount {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-inline-start: auto; /* the amount goes to the left */
+}
+
+.poster-card__amount strong {
+  font-size: 15px;
+  font-weight: inherit;
+  line-height: 1.5;
+}
+
+.poster-card__amount small {
+  font-size: 9px;
+  opacity: 0.75;
+}
+
+/* =========================
+   5. Mobile
+========================== */
+
+@media (max-width: 1000px) {
+  .poster-section {
+    --poster-width: 160px;
+  }
+
+  .poster-section__title {
+    margin-bottom: 16px;
+    font-size: 17px;
+  }
+
+  .poster-card {
+    border-radius: 24px;
+  }
+
+  .poster-card__top {
+    padding: 12px 12px 0;
+  }
+
+  .poster-card__logo {
+    width: 32px;
+    height: 32px;
+  }
+
+  .poster-card__title {
+    font-size: 13px;
+  }
+
+  .poster-card__bottom {
+    padding: 0 8px 8px;
+  }
+
+  .poster-card__amount strong {
+    font-size: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .poster-card {
+    transition: none;
+  }
+}
