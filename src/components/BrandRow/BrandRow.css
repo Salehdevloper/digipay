@@ -1,0 +1,75 @@
+/* =========================================================
+   BrandRow.css  («فروشگاه‌های منتخب» با لوگوهای گرد)
+========================================================= */
+
+.brand-row {
+  direction: rtl;
+  padding-bottom: var(--section-space, 80px);
+  font-family: var(--font-main), sans-serif;
+  font-weight: var(--font-weight-text, 400);
+}
+
+.brand-row__container {
+  width: min(
+    100% - var(--container-gutter, 40px),
+    var(--container-width-wide, 1355px)
+  );
+  margin-inline: auto;
+}
+
+.brand-row__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 36px;
+}
+
+.brand-row__title {
+  color: var(--color-text-strong, #1f2937);
+  font-size: 17px;
+  font-weight: inherit;
+  line-height: 1.6;
+}
+
+.brand-row__subtitle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  color: var(--color-primary, #1159fc);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.brand-row__subtitle svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.brand-row__all {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-primary, #1159fc);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+}
+
+.brand-row__all svg {
+  width: 20px;
+  height: 20px;
+}
+
+.brand-row__all:hover {
+  opacity: 0.75;
+}
+
+@media (max-width: 1000px) {
+  .brand-row__header {
+    margin-bottom: 20px;
+  }
+} 

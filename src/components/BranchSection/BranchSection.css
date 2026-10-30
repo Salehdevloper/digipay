@@ -1,0 +1,66 @@
+/* =========================================================
+   BranchSection.css  («آدرس شعب حضوری» in the store page)
+========================================================= */
+
+.branch-section {
+  /* the fixed header must not cover the title after the scroll */
+  scroll-margin-top: 120px;
+
+  direction: rtl;
+  padding-bottom: var(--section-space, 80px);
+  font-family: var(--font-main), sans-serif;
+  font-weight: var(--font-weight-text, 400);
+}
+
+.branch-section__container {
+  width: min(
+    100% - var(--container-gutter, 40px),
+    var(--container-width-wide, 1355px)
+  );
+  margin-inline: auto;
+}
+
+.branch-section__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.branch-section__title {
+  color: var(--color-text-strong, #1f2937);
+  font-size: 18px;
+  font-weight: inherit;
+  line-height: 1.6;
+}
+
+.branch-section__all {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-primary, #1159fc);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+}
+
+.branch-section__all svg {
+  width: 20px;
+  height: 20px;
+}
+
+.branch-section__all:hover {
+  opacity: 0.75;
+}
+
+@media (max-width: 1000px) {
+  .branch-section__header {
+    margin-bottom: 16px;
+  }
+
+  .branch-section__title {
+    font-size: 17px;
+  }
+}

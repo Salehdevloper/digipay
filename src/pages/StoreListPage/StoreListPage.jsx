@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useParams, useSearchParams } from "react-router-dom";
 
 import { FiArrowRight, FiSliders } from "react-icons/fi";
 
@@ -111,11 +111,11 @@ function FilterChips({ filters, onChange }) {
 }
 
 /* The page itself (re-created when the category in the URL changes) */
-function StoreListContent({ category }) {
+function StoreListContent({ category, initialTypes }) {
   const [filters, setFilters] = useState(() => ({
     sort: DEFAULT_SORT,
     payments: [],
-    types: [],
+    types: initialTypes,
     categories: [category.id],
   }));
 
@@ -243,6 +243,11 @@ function StoreListContent({ category }) {
 
 function StoreListPage() {
   const { categoryId } = useParams();
+
+  // /stores/category/fashion?type=offline  starts with «حضوری» ticked
+  const [searchParams] = useSearchParams();
+  const type = searchParams.get("type");
+  const initialTypes = ["online", "offline"].includes(type) ? [type] : [];
   const category = getCategoryById(categoryId);
 
   // «فروشگاه‌های کالای دیجیتال قسطی | دیجی‌پی»
@@ -251,7 +256,13 @@ function StoreListPage() {
   if (!category) return <Navigate to="/stores" replace />;
 
   // key = category: opening another category starts with fresh filters
-  return <StoreListContent category={category} key={category.id} />;
+  return (
+    <StoreListContent
+      category={category}
+      initialTypes={initialTypes}
+      key={`${category.id}-${type}`}
+    />
+  );
 }
 
 export default StoreListPage;

@@ -1,0 +1,149 @@
+/* =========================================================
+   BrandCircles.css  (ردیف لوگوهای گرد + «بیشتر»)
+========================================================= */
+
+.brand-circles {
+  direction: rtl;
+  font-family: var(--font-main), sans-serif;
+  font-weight: var(--font-weight-text, 400);
+}
+
+/* desktop: equal columns (--brand-columns is set by the component) */
+.brand-circles__list {
+  display: grid;
+  grid-template-columns: repeat(var(--brand-columns, 9), minmax(0, 1fr));
+  gap: 38px 12px; /* row gap, column gap */
+  cursor: grab;
+}
+
+.brand-circles__list--dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.brand-circles__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+/* the red % badge sits on the corner of the circle */
+.brand-circles__logo-wrap {
+  position: relative;
+  width: var(--brand-size, 100px);
+  max-width: 100%;
+}
+
+.brand-circles__badge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: #fff;
+  background: var(--color-danger, #f9441f);
+  border: 2px solid #fff;
+  border-radius: 50%;
+}
+
+.brand-circles__badge svg {
+  width: 12px;
+  height: 12px;
+  stroke-width: 3;
+}
+
+.brand-circles__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  color: var(--color-primary, #1159fc);
+  font-size: 32px;
+  background: var(--color-surface, #fff);
+  border-radius: 50%;
+  box-shadow: 0 6px 20px rgba(28, 47, 75, 0.05);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.brand-circles__logo img {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.brand-circles__name {
+  color: var(--color-text, #45474a);
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* «بیشتر»: three vertical dots, blue label */
+.brand-circles__item--more .brand-circles__name {
+  color: var(--color-primary, #1159fc);
+}
+
+.brand-circles__dots {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.brand-circles__dots i {
+  width: 8px;
+  height: 8px;
+  background: #8c8fff;
+  border-radius: 50%;
+}
+
+.brand-circles__dots i:nth-child(2) {
+  background: var(--color-primary, #1159fc);
+}
+
+@media (hover: hover) {
+  .brand-circles__item:hover .brand-circles__logo {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 28px rgba(28, 47, 75, 0.1);
+  }
+}
+
+/* mobile: the row scrolls sideways */
+@media (max-width: 1000px) {
+  .brand-circles__list {
+    display: flex;
+    gap: 14px;
+    padding: 4px 2px 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .brand-circles__list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .brand-circles__list > li {
+    flex: 0 0 84px;
+  }
+
+  .brand-circles__logo-wrap {
+    width: 76px;
+  }
+
+  .brand-circles__logo {
+    font-size: 26px;
+  }
+
+  .brand-circles__name {
+    font-size: 12px;
+  }
+}

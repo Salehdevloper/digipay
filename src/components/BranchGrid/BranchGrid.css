@@ -1,0 +1,110 @@
+/* =========================================================
+   BranchGrid.css  (کارت‌های آدرس شعب)
+========================================================= */
+
+.branch-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  direction: rtl;
+}
+
+.branch-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 22px 20px;
+  font-family: var(--font-main), sans-serif;
+  font-weight: var(--font-weight-text, 400);
+  background: var(--color-surface, #fff);
+  border-radius: 24px;
+}
+
+/* round pin (gray on the white card) */
+.branch-card__pin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  color: #111;
+  background: var(--color-bg, #f2f3f6);
+  border-radius: 50%;
+}
+
+.branch-card__pin svg {
+  width: 24px;
+  height: 24px;
+}
+
+.branch-card__body {
+  flex: 1;
+  min-width: 0;
+}
+
+/* name on the right, «مسیریابی» on the left */
+.branch-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.branch-card__name {
+  color: var(--color-text-strong, #1f2937);
+  font-size: 16px;
+  font-weight: inherit;
+  line-height: 1.6;
+}
+
+.branch-card__route {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  color: var(--color-primary, #1159fc);
+  font-size: 14px;
+  line-height: 1.6;
+  transition: opacity 0.2s ease;
+}
+
+.branch-card__route svg {
+  width: 18px;
+  height: 18px;
+}
+
+.branch-card__route:hover {
+  opacity: 0.75;
+}
+
+.branch-card__address {
+  margin-top: 4px;
+  color: #6b6e75;
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+@media (max-width: 1000px) {
+  .branch-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+}
+
+@media (max-width: 700px) {
+  .branch-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .branch-card {
+    padding: 16px 14px;
+    gap: 12px;
+    border-radius: 20px;
+  }
+
+  .branch-card__pin {
+    width: 42px;
+    height: 42px;
+  }
+}

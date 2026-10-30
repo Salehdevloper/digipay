@@ -1,28 +1,26 @@
 import { Link, useParams } from "react-router-dom";
 
-import DiscountCodes from "../../components/DiscountCodes/DiscountCodes";
-import ProductSection from "../../components/ProductSection/ProductSection";
+import PageSections from "../../components/PageSections/PageSections";
 import StoreProfile from "../../components/StoreProfile/StoreProfile";
 
-import { getBestSellerCodes, getCodesByStore } from "../../data/discountCodes";
 import { getStoreById } from "../../data/stores";
-import {
-  getSectionProducts,
-  getSectionTitle,
-  getStoreSections,
-} from "../../data/storeSections";
 import { usePageTitle } from "../../hooks/usePageTitle";
 
 import "./StoreDetailPage.css";
 
 /* =========================================================
-   Store page   (/stores/:storeId)   e.g. /stores/bani-mod
+   Store page   (/stores/:storeId)   e.g. /stores/charm-mashhad
 
-   - one page for every online store (data/stores.js)
-   - tab title: "خرید اقساطی از بانی مد | دیجی‌پی"
-   - the "کد تخفیف" section reads the shared list
-     (data/discountCodes.js): a store with codes shows them,
-     a store without codes shows nothing.
+   top to bottom:
+     1. the store card              (StoreProfile)
+     2. the rest of the sections    (PageSections, order in
+                                     config/pageLayout.js, key "store")
+                                     including «آدرس شعب حضوری»
+                                     ("storeBranches")
+
+   «خرید حضوری» in the store card scrolls down to #branches
+   (the id lives in BranchSection).
+   Tab title: "خرید اقساطی از چرم مشهد | دیجی‌پی"
 ========================================================= */
 
 function StoreDetailPage() {
@@ -45,31 +43,14 @@ function StoreDetailPage() {
     );
   }
 
-  const codes = getCodesByStore(store.id);
-  const sections = getStoreSections(store.id);
-
   return (
     <div className="store-detail">
       <div className="store-detail__container">
         <StoreProfile store={store} />
       </div>
 
-      {/* renders nothing when `codes` is empty */}
-      <DiscountCodes codes={codes} showAllLink={false} />
-
-      {/* product rows of this store (data/storeSections.js).
-          The "best sellers" row also gets this store's codes that have
-          inBestSellers: true (data/discountCodes.js) as first cards. */}
-      {sections.map((section) => (
-        <ProductSection
-          key={section.id}
-          title={getSectionTitle(section, store)}
-          products={getSectionProducts(store.id, section)}
-          discountCodes={
-            section.filter === "bestSeller" ? getBestSellerCodes("store", store.id) : []
-          }
-        />
-      ))}
+      {/* «آدرس شعب حضوری» is now drawn by PageSections ("storeBranches" in pageLayout.js) */}
+      <PageSections page="store" storeId={store.id} />
     </div>
   );
 }

@@ -1,6 +1,8 @@
 import { useSearchParams } from "react-router-dom";
 
 import BannerSlider from "../../components/BannerSlider/BannerSlider";
+import BannerStrip from "../../components/BannerStrip/BannerStrip";
+import BrandRow from "../../components/BrandRow/BrandRow";
 import FeaturedStores from "../../components/FeaturedStores/FeaturedStores";
 import InStoreHero from "../../components/InStoreHero/InStoreHero";
 import PageSections from "../../components/PageSections/PageSections";
@@ -8,6 +10,11 @@ import StoreCategories from "../../components/StoreCategories/StoreCategories";
 import StoresTabs from "../../components/StoresTabs/StoresTabs";
 
 import { getStoreMode } from "../../constants/storeModes";
+import { getBrandRowById } from "../../data/brandRows";
+import {
+  IN_STORE_BOTTOM_STRIP,
+  IN_STORE_TOP_STRIP,
+} from "../../data/inStoreStrips";
 import { usePageTitle } from "../../hooks/usePageTitle";
 import { resolveImage } from "../../utils/resolveImage";
 
@@ -27,7 +34,7 @@ const BANNER_IMAGES = import.meta.glob(
   { eager: true, import: "default" }
 );
 
-/* =========================================================
+	/* =========================================================
    Data
 ========================================================= */
 
@@ -41,22 +48,6 @@ const ONLINE_BANNERS = [
   ...banner,
   image: resolveImage(BANNER_IMAGES, banner.image),
   href: "#",
-}));
-
-/** id = logo file name in assets/images/brands/ */
-const IN_STORE_BRANDS = [
-  { id: "pierre-cardin", name: "پیر کاردین" },
-  { id: "doris", name: "درریس" },
-  { id: "charm-mashhad", name: "چرم مشهد" },
-  { id: "david-jones", name: "دیوید جونز" },
-  { id: "komar", name: "کوماز" },
-  { id: "lc-waikiki", name: "ال سی وایکیکی" },
-  { id: "rest", name: "رست" },
-  { id: "roja", name: "روژا" },
-  { id: "serge", name: "سرژه" },
-].map((store) => ({
-  ...store,
-  to: `/stores/${store.id}`, // each shop has its own page (data/stores.js)
 }));
 
 const ONLINE_BRANDS = [
@@ -93,15 +84,28 @@ function OnlineStores() {
 }
 
 function InStoreStores() {
+  // only the map banner lives inside the page container
+  return <InStoreHero />;
+}
+
+/**
+ * The rest of the «حضوری» tab, top to bottom:
+ *   1. big banners        (right under the map banner)
+ *   2. فروشگاه‌های منتخب   (round logos, data/brandRows.js)
+ *   3. smaller banners
+ * Move a line to change the order. They have their own width, so they are
+ * drawn outside the page container.
+ */
+function InStoreSections() {
+  const brandRow = getBrandRowById("in-store");
+
   return (
     <>
-      <InStoreHero />
+      <BannerStrip strip={IN_STORE_TOP_STRIP} />
 
-      <FeaturedStores
-        title="فروشگاه‌های منتخب"
-        subtitle="۵٪ بازگشت پول در خرید با دیجی‌کارت"
-        stores={IN_STORE_BRANDS}
-      />
+      {brandRow && <BrandRow row={brandRow} />}
+
+      <BannerStrip strip={IN_STORE_BOTTOM_STRIP} />
     </>
   );
 }
@@ -144,6 +148,8 @@ function StoresPage() {
           پرفروش‌ترین‌ها. Switch each one in config/pageSections.js (key "stores").
           They have their own width, so they live outside the container above. */}
       {mode === "online" && <PageSections page="stores" />}
+
+      {mode === "offline" && <InStoreSections />}
     </div>
   );
 }

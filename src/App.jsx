@@ -19,6 +19,7 @@ import "./styles/responsive.css";
 const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
 const StoresPage = lazy(() => import("./pages/StoresPage/StoresPage"));
 const StoreListPage = lazy(() => import("./pages/StoreListPage/StoreListPage"));
+const StoreBranchesPage = lazy(() => import("./pages/StoreBranchesPage/StoreBranchesPage"));
 const StoreDetailPage = lazy(() => import("./pages/StoreDetailPage/StoreDetailPage"));
 const PaymentPage = lazy(() => import("./pages/PaymentPage/PaymentPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage"));
@@ -49,6 +50,7 @@ function App() {
               <Route path="/stores" element={<StoresPage />} />
               <Route path="/stores/category/:categoryId" element={<StoreListPage />} />
               <Route path="/stores/:storeId" element={<StoreDetailPage />} />
+              <Route path="/stores/:storeId/branches" element={<StoreBranchesPage />} />
 
               {/* Needs a login: guests are sent to /login first */}
               <Route element={<ProtectedRoute />}>

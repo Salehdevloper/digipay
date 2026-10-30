@@ -4,6 +4,7 @@ import { FiHelpCircle, FiShoppingBag } from "react-icons/fi";
 
 import PurchaseGuideModal from "../PurchaseGuideModal/PurchaseGuideModal";
 
+import { getStoreBranches } from "../../data/branches";
 import { resolveImage } from "../../utils/resolveImage";
 
 import "./StoreProfile.css";
@@ -70,6 +71,22 @@ function StoreProfile({ store }) {
   // «راهنمای خرید» opens the guide window (components/PurchaseGuideModal)
   const [isGuideOpen, setIsGuideOpen] = useState(false);
 
+  // a store with branches gets «خرید حضوری»: it scrolls to the branch list
+  const hasBranches = getStoreBranches(id).length > 0;
+
+  const scrollToBranches = (event) => {
+    event.preventDefault();
+
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    document.getElementById("branches")?.scrollIntoView({
+      behavior: reduceMotion ? "auto" : "smooth",
+      block: "start",
+    });
+  };
+
   const logo = resolveImage(BRAND_LOGOS, id);
   const cover = resolveImage(STORE_COVERS, id);
 
@@ -127,12 +144,12 @@ function StoreProfile({ store }) {
             </div>
           </div>
 
-          {/* Each button appears only when the store has that link:
-              inStoreUrl -> «خرید حضوری»,  website -> «خرید آنلاین».
-              Both open the other site in a NEW tab. */}
-          {(inStoreUrl || website) && (
+          {/* «خرید حضوری»: appears when the store has branches (click = scroll
+              down to them) or an inStoreUrl (opens that site in a NEW tab).
+              «خرید آنلاین»: appears when the store has a website (NEW tab). */}
+          {(hasBranches || inStoreUrl || website) && (
             <div className="store-profile__actions">
-              {inStoreUrl &&
+              {(hasBranches || inStoreUrl) &&
                 (inactive ? (
                   <span
                     className="store-profile__cta store-profile__cta--secondary store-profile__cta--disabled"
@@ -140,6 +157,14 @@ function StoreProfile({ store }) {
                   >
                     خرید حضوری
                   </span>
+                ) : hasBranches ? (
+                  <a
+                    className="store-profile__cta store-profile__cta--secondary"
+                    href="#branches"
+                    onClick={scrollToBranches}
+                  >
+                    خرید حضوری
+                  </a>
                 ) : (
                   <a
                     className="store-profile__cta store-profile__cta--secondary"

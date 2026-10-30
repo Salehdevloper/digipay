@@ -6,8 +6,9 @@
 ========================================================= */
 
 .banner-strip {
-  --strip-ratio: 415 / 125; /* picture width / height */
-  --strip-visible: 3.15; /* banners on screen (the .15 = the next one peeking) */
+  /* a strip can set its own values in data/bannerStrips.js (ratio, visible) */
+  --strip-ratio: var(--strip-ratio-custom, 415 / 125); /* picture width / height */
+  --strip-visible: var(--strip-visible-desktop, 3.15); /* banners on screen (the .15 = the next one peeking) */
   --strip-gap: 12px;
 
   direction: rtl;
