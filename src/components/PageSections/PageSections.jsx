@@ -13,7 +13,7 @@ import {
 
 import BannerStrip from "../BannerStrip/BannerStrip";
 import BranchSection from "../BranchSection/BranchSection";
-import DiscountCodes from "../DiscountCodes/Discountcodes";
+import DiscountCodes from "../DiscountCodes/DiscountCodes";
 import FlashDeals from "../FlashDeals/FlashDeals";
 import PartnerPromo from "../PartnerPromo/PartnerPromo";
 import PosterSection from "../PosterSection/PosterSection";
